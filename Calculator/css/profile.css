@@ -1,0 +1,86 @@
+.profile {
+  display: grid;
+  width: 100%;
+  background: white;
+}
+
+.profile .col-md-3 {
+  background: #082c44;
+  height: 95vh;
+}
+.pro-nav {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+  background: #ffa94c;
+  margin: auto;
+}
+.pic {
+  background: #ffa94c;
+  width: 70%;
+  height: 200px;
+  margin: auto;
+  margin-top: 100px;
+  border-radius: 50%;
+}
+.pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.name {
+  background: transparent;
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+  text-align: center;
+  color: white;
+  font-weight: 1000px;
+}
+.tabs {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  width: 100%;
+}
+.tabs .my-upload,
+.tabs .my-add,
+.tabs .my-pay {
+  width: 100%;
+  height: 80px;
+  background: transparent;
+  border-bottom: 1px solid #fee6e2;
+  border-top: 1px solid #fee6e2;
+  text-align: center;
+  padding: 28px;
+  color: #fee6e2;
+}
+.tabs .my-upload:hover,
+.tabs .my-add:hover,
+.tabs .my-pay:hover {
+  background: white;
+  color: #082c44;
+}
+
+.pro-body {
+  height: 95vh;
+  background: #082c44;
+  overflow-y:auto;
+}
+.list-item {
+  background: white;
+
+  margin-top: 20px;
+  padding: 50px;
+}
+
+.pro-body .col-lg-6 {
+  padding: 20px;
+}
+
+#list-item-2,
+#list-item-3{
+    height: 95vh;
+}
+

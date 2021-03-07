@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Register</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="../vendor/bootstrap.min.js">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" href="../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<!-- CSS Libraries -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+
+	<link rel="stylesheet" type="text/css" href="../css/util.css">
+	<link rel="stylesheet" type="text/css" href="../css/login.css">
+	<link href="../css/main.css" rel="stylesheet" />
+</head>
+
+<body scroll="no" style="overflow: hidden">
+	<div id="app">
+		<!-- Nav Bar Start -->
+	<div class="nav-bar">
+		<div class="container">
+			<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+				<a href="#" class="navbar-brand">MENU</a>
+				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+					<div class="navbar-nav mr-auto">
+						<a href="main.html" class="nav-item nav-link">Home</a>
+
+						<a href="my-profile.html" class="nav-item nav-link">My Profile</a>
+					</div>
+					<div class="social ml-auto">
+						<a href=""><i class="fab fa-twitter"></i></a>
+						<a href=""><i class="fab fa-facebook-f"></i></a>
+						<a href=""><i class="fab fa-linkedin-in"></i></a>
+						<a href=""><i class="fab fa-instagram"></i></a>
+						<a href=""><i class="fab fa-youtube"></i></a>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- Nav Bar End -->
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form-title">
+					<span class="login100-form-title-1">
+						Sign up
+					</span>
+				</div>
+
+				<form class="login100-form ">
+					<div class="wrap-input100 m-b-26">
+						<span class="label-input100">Username</span>
+						<input v-model="username" class="input100" type="username" name="username"
+							placeholder="Enter username" required>
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100  m-b-26">
+						<span class="label-input100">Email</span>
+						<input v-model="email" class="input100" type="email" name="email" placeholder="Enter email"
+							required>
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100  m-b-18" required>
+						<span class="label-input100">Password</span>
+						<input v-model="password" class="input100" type="password" name="pass"
+							placeholder="Enter password" required>
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="flex-sb-m w-full p-b-30">
+						<div class="contact100-form-checkbox">
+
+						</div>
+
+						<div>
+							<a href="login.html" class="txt1">
+								Already a member?
+							</a>
+						</div>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button v-on:click="register" class="btn regis-btn" type="button">Sign up</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+		 https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+
+	<script src="../vendor/firebase-config.js"></script>
+	<!--//REQUIRED SCRIPTS-->
+	<script src="../vendor/fontawesome.js"></script>
+	<script src="../vendor/vue.js"></script>
+	<script src="../vendor/vue-router.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
+
+	<script src="../js/login.js"></script>
+
+</body>
+
+</html>

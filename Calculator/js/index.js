@@ -14,7 +14,7 @@ var app = new Vue({
                     // Signed in
                     var user = userCredential.user;
                     localStorage.setItem(DB.USER, JSON.stringify(user))
-                    window.location.href = PAGES.CALCULATOR
+                    //window.location.href = PAGES.CALCULATOR
                     // ...
                 })
                 .catch((error) => {
@@ -24,6 +24,7 @@ var app = new Vue({
         }
     }
 })
+
 
 $.get( 'https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/newest?lim=20&desc=true&cat=travel', function( data ) {
   console.log(data)
