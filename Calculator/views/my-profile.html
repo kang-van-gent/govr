@@ -66,7 +66,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4">
                         <div class="b-logo">
-                            <a href="main.html">
+                            <a v-on:click="toHome">
                                 <!---<img src="../img/logo.png" alt="Logo">--->
                             </a>
                         </div>
@@ -123,9 +123,9 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a href="main.html" class="nav-item nav-link">Home</a>
+                            <a v-on:click="toHome" class="nav-item nav-link">Home</a>
 
-                            <a href="my-profile.html" class="nav-item nav-link active">My Profile</a>
+                            <a v-on:click="toProfile" class="nav-item nav-link active">My Profile</a>
                         </div>
                         <div class="social ml-auto">
                             <a href=""><i class="fab fa-twitter"></i></a>

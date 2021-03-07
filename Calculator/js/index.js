@@ -14,7 +14,7 @@ var app = new Vue({
                     // Signed in
                     var user = userCredential.user;
                     localStorage.setItem(DB.USER, JSON.stringify(user))
-                    //window.location.href = PAGES.CALCULATOR
+                    window.location.href = PAGES.CALCULATOR
                     // ...
                 })
                 .catch((error) => {
