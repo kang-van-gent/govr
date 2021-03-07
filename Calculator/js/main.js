@@ -47,7 +47,7 @@ var app = new Vue({
         },
         toHome: function () {
 
-            window.location.href = PAGES.MAIN
+            window.location.href = PAGES.INDEX
         },
         toProfile: function () {
 
@@ -58,7 +58,7 @@ var app = new Vue({
           .then(()=>{
             localStorage.removeItem(DB.USER)
 
-            window.location.href = PAGES.MAIN
+            window.location.href = PAGES.INDEX
           }).catch((err) => {
             console.log(err.message)
           })

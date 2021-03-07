@@ -22,8 +22,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../css/main.css" rel="stylesheet">
-    <link href="../css/profile.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/profile.css" rel="stylesheet">
     <!-- Additional CSS Files -->
 
 
@@ -83,7 +83,7 @@
                             <div class="btn-group">
                                 <button class="btn btn-secondary btn-sm" type="button" v-on:click="toProfile">
                                     <div v-if="user.imageURL == null">
-                                        <img src="../assets/icons/calculator.png" />
+                                        <img src="assets/icons/calculator.png" />
                                     </div>
                                     <div v-else>
                                         <img :src=user.imageUR />
@@ -123,9 +123,9 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a v-on:click="toHome" class="nav-item nav-link">Home</a>
+                            <a href="index.html" class="nav-item nav-link">Home</a>
 
-                            <a v-on:click="toProfile" class="nav-item nav-link active">My Profile</a>
+                            <a class="nav-item nav-link active">My Profile</a>
                         </div>
                         <div class="social ml-auto">
                             <a href=""><i class="fab fa-twitter"></i></a>
@@ -334,9 +334,9 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <!--//REQUIRED SCRIPTS-->
-    <script src="../vendor/fontawesome.js"></script>
-    <script src="../vendor/vue.js"></script>
-    <script src="../vendor/vue-router.js"></script>
+    <script src="vendor/fontawesome.js"></script>
+    <script src="vendor/vue.js"></script>
+    <script src="vendor/vue-router.js"></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
@@ -346,13 +346,13 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <!--REQUIRED SCRIPTS//-->
-    <script src="../vendor/contents.js"></script>
-    <script src="../vendor/category.js"></script>
-    <script src="../vendor/firebase-config.js"></script>
+    <script src="vendor/contents.js"></script>
+    <script src="vendor/category.js"></script>
+    <script src="vendor/firebase-config.js"></script>
 
 
     <!-- Template Javascript -->
-    <script src="../js/main.js"></script>
+    <script src="js/main.js"></script>
 
 
 </body>
