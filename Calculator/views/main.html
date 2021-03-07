@@ -59,32 +59,32 @@
           </div>
           <div class="col-lg-3 col-md-4">
             <div class="d-grid gap-2 offset-md-8" v-if="user !== null">
-                <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm" type="button" v-on:click="toProfile">
-                        <div v-if="user.imageURL == null">
-                          <img src="../assets/icons/calculator.png" />
-                        </div>
-                        <div v-else>
-                          <img :src=user.imageUR />
-                        </div>
-                        
-                    </button>
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm" type="button" v-on:click="toProfile">
+                  <div v-if="user.imageURL == null">
+                    <img src="../assets/icons/calculator.png" />
+                  </div>
+                  <div v-else>
+                    <img :src=user.imageUR />
+                  </div>
 
-                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle "
-                        data-toggle="dropdown" aria-expanded="false">
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><button class="dropdown-item" type="button" v-on:click="toProfile">My Profile</button></li>
-                        <li><button class="dropdown-item" type="button" v-on:click="logout">log out</button></li>
-                    </ul>
-                </div>
+                </button>
+
+                <button type="button" class="btn btn-sm btn-secondary dropdown-toggle " data-toggle="dropdown"
+                  aria-expanded="false">
+                </button>
+                <ul class="dropdown-menu">
+                  <li><button class="dropdown-item" type="button" v-on:click="toProfile">My Profile</button></li>
+                  <li><button class="dropdown-item" type="button" v-on:click="logout">log out</button></li>
+                </ul>
+              </div>
             </div>
             <div class="d-grid gap-2 d-md-block" v-else>
-                <button v-on:click="toLogin" class="btn btn-outline-primary" type="button">Log
-                    in</button>
-                <button v-on:click="toRegister" class="btn btn-primary" type="button">Register</button>
+              <button v-on:click="toLogin" class="btn btn-outline-primary" type="button">Log
+                in</button>
+              <button v-on:click="toRegister" class="btn btn-primary" type="button">Register</button>
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -122,11 +122,11 @@
     <div class="main-news">
       <div class="container">
         <div class="row">
-          <div class="col-md-3" v-for="content in contents ">
-            <div class="mn-img">
+          <div class="col-md-3" v-for="content in contents " >
+            <div class="mn-img" >
               <img :src="content.image" />
               <div class="mn-title">
-                <a href="">{{content.title}}</a>
+                <a href="webxr.html">{{content.title}}</a>
               </div>
             </div>
           </div>
