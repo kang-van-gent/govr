@@ -1,6 +1,4 @@
-if (localStorage.getItem("DB") == null) {
-  localStorage.setItem("DB", "[]");
-}
+
 
 var app = new Vue({
   el: "#app",
@@ -8,6 +6,7 @@ var app = new Vue({
     username: "",
     email: "",
     password: "",
+    userLoggedin: []
   },
   methods: {
     login: function () {
@@ -18,11 +17,12 @@ var app = new Vue({
           // Signed in
           var user = userCredential.user;
 
-          localStorage.setItem(DB.USER, JSON.stringify(user));
+          localStorage.setItem(JSON.stringify(user.uid), JSON.stringify(user));
 
-          window.location.href = PAGES.MAIN;
+          //window.location.href = PAGES.MAIN;
           // ...
           let data = (await usersRef.doc(user.uid).get()).data();
+          this.userLoggedin = user.uid
           console.log(data);
         })
         .catch((error) => {

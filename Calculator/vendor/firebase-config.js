@@ -31,4 +31,5 @@ const PAGES = {
   REGISTER: "register.html",
   MAIN: "main.html",
   MYPROFILE: "my-profile.html",
+  CATEGORY: "category.html"
 };

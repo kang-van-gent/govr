@@ -101,7 +101,7 @@
 
           <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link active">Home</a>
+              <a v-on:click="toHome" class="nav-item nav-link active">Home</a>
 
               <a v-on:click="toProfile" class="nav-item nav-link">My Profile</a>
             </div>
@@ -119,31 +119,33 @@
     <!-- Nav Bar End -->
 
 
-      <!-- Main News Start--->
-      <div class="main-news">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-3" v-for="content in contentsCat ">
-              <div class="mn-img">
-                <img :src="content.image360" />
-                <div class="mn-title">
-                  <a href="webxr.html">{{content.title}}</a>
-                </div>
+    <!-- Main News Start--->
+    <div style="text-align: center; margin:20px 500px; font-size:30px; font-weight:bold; border-bottom: 1px solid black; width: 500px;">{{ category }}</div>
+    <div class="main-news">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3" v-for="content in contentCat">
+            <div class="mn-img">
+              <img :src="content.image360" />
+              <div class="mn-title">
+                <a href="webxr.html">{{content.title}}</a>
               </div>
             </div>
+
           </div>
+        </div>
 
 
-          <!-- Category Start
+
         <div class="row category">
           <div class="col-md-4" v-for="category in categories ">
-            <button href="/" class="btn btn-cate" type="submit">{{category.title}}</button>
+            <button v-on:click="getCat(category.label)" class="btn btn-cate" type="submit">{{category.title}}</button>
           </div>
         </div>
-        Category End-->
 
-        </div>
+
       </div>
+    </div>
 
     <!-- Main News End-->
 
@@ -271,12 +273,7 @@
   <script src="vendor/firebase-config.js"></script>
 
   <!-- Template Javascript -->
-  <script src="js/category.js"></script>
   <script src="js/main.js"></script>
-
-
-
-
 
 </body>
 
