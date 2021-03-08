@@ -1,5 +1,5 @@
 (function ($) {
-    
+
     // Sticky Navbar
     $(window).scroll(function () {
         if ($(this).scrollTop() > 150) {
@@ -8,7 +8,7 @@
             $('.nav-bar').removeClass('nav-sticky');
         }
     });
-    
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -18,28 +18,29 @@
         }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
-    
+
 })(jQuery);
 
 let user = JSON.parse(localStorage.getItem(DB.USER))
 
-
 var app = new Vue({
     el: '#app',
     data: {
-        contents: DATA,
-        categories: CATE,
+        contents: [],
+        categories: [],
         name: 'Hi from data',
-        user: user
+        user: user,
+        catPage: ''
+        
     },
     methods: {
         toLogin: function () {
-            
+
             window.location.href = PAGES.LOGIN
-                 
+
         },
         toRegister: function () {
 
@@ -54,16 +55,41 @@ var app = new Vue({
             window.location.href = PAGES.MYPROFILE
         },
         logout: () => {
-          firebase.auth().signOut()
-          .then(()=>{
-            localStorage.removeItem(DB.USER)
+            firebase.auth().signOut()
+                .then(() => {
+                    localStorage.removeItem(DB.USER)
 
-            window.location.href = PAGES.INDEX
-          }).catch((err) => {
-            console.log(err.message)
-          })
+                    window.location.href = PAGES.INDEX
+                }).catch((err) => {
+                    console.log(err.message)
+                })
+        },
+        getCat: (cat) => {
+            console.log(cat)
+            this.catPage = cat
+            localStorage.setItem("Category",cat)
         }
     }
 })
 
-console.log(user)
+
+
+initData()
+function initData() {
+    $.get('https://us-central1-govr-42c7d.cloudfunctions.net/api/categories/all', function (data) {
+        app.categories = data
+    });
+
+    $.get('https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/newest?lim=20&desc=true', function (data) {
+        app.contents = data
+        //console.log(data)
+    });
+
+}
+
+
+
+
+
+
+

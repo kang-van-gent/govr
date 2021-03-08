@@ -384,6 +384,7 @@ h6 {
 .main-news {
   position: relative;
   width: 100%;
+
   margin-bottom: 30px;
 }
 .main-news .row {
@@ -403,7 +404,7 @@ h6 {
   cursor: pointer;
   border-radius: 5px;
   width: 100%;
-  height: 100%;
+  height: 250px;
 }
 
 .main-news .mn-img img {

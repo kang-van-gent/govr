@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
+  <title>Category</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet" />
   <!-- CSS Libraries -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
@@ -101,7 +101,7 @@
 
           <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav mr-auto">
-              <a  class="nav-item nav-link active">Home</a>
+              <a class="nav-item nav-link active">Home</a>
 
               <a v-on:click="toProfile" class="nav-item nav-link">My Profile</a>
             </div>
@@ -118,30 +118,33 @@
     </div>
     <!-- Nav Bar End -->
 
-    <!-- Main News Start-->
-    <div class="main-news">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3" v-for="content in contents " >
-            <div class="mn-img" >
-              <img :src="content.image360" />
-              <div class="mn-title">
-                <a href="webxr.html">{{content.title}}</a>
+
+      <!-- Main News Start--->
+      <div class="main-news">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3" v-for="content in contentsCat ">
+              <div class="mn-img">
+                <img :src="content.image360" />
+                <div class="mn-title">
+                  <a href="webxr.html">{{content.title}}</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Category Start-->
+
+          <!-- Category Start
         <div class="row category">
           <div class="col-md-4" v-for="category in categories ">
-            <button v-on:click="getCat(category.label)" class="btn btn-cate" type="submit">{{category.title}}</button>
+            <button href="/" class="btn btn-cate" type="submit">{{category.title}}</button>
           </div>
         </div>
-        <!-- Category End-->
+        Category End-->
 
+        </div>
       </div>
-    </div>
+
     <!-- Main News End-->
 
     <!-- Footer Start -->
@@ -268,7 +271,12 @@
   <script src="vendor/firebase-config.js"></script>
 
   <!-- Template Javascript -->
+  <script src="js/category.js"></script>
   <script src="js/main.js"></script>
+
+
+
+
 
 </body>
 
