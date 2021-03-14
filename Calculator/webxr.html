@@ -5,24 +5,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://github.com/supermedium/three.js"></script>
+    <title>webxr</title>
+    <script src="//aframe.io/releases/0.4.0/aframe.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
 
-    <style>
-
-    </style>
 </head>
 
 <body>
     <div id="app">
-        <div class="frame">
-            <a-scene>
-                <a-sky :src="content.image360">
-            </a-scene>
-        </div>
+        <a-scene>
+            <a-sky id="img360">
+        </a-scene>
+
+
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <!--//REQUIRED SCRIPTS-->
+    <script src="vendor/fontawesome.js"></script>
+    <script src="vendor/vue.js"></script>
+    <script src="vendor/vue-router.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
+    <!--REQUIRED SCRIPTS//-->
+    <script src="vendor/contents.js"></script>
+    <script src="vendor/category.js"></script>
+    <script src="vendor/firebase-config.js"></script>
 
+    <script src="js/webxr.js"></script>
 </body>
 
 </html>

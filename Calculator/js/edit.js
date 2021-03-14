@@ -13,11 +13,11 @@ var app = new Vue({
     toHome: function () {
       window.location.href = PAGES.INDEX;
     },
-    create: async (title, des, cat, img) => {
+    create: async (title, des, cat) => {
       try {
         let data = {
           uid: user.uid,
-          image360: img,
+          image360: name,
           location: [],
           title: title,
           description: des,
@@ -28,11 +28,20 @@ var app = new Vue({
           disabled: false,
           thumbnail: "",
         };
-        //await contentsRef.doc().set(data)
-        console.log(data);
+        let i = Dropzone.forElement("#demo-upload");
+        var message = i.files[0].dataURL;
+        const arr = message.split('data:image/jpeg;base64,')
+        let name = fileName(data.uid)
+        let ref = imgRef.child(name)
+        await ref.putString(arr[1], "base64").then((snapshot) => {
+          console.log(name);
+        });
+        
+        await contentsRef.doc().set(data)
       } catch (err) {
         console.log(err.message);
       }
+      
     },
     onFileChange() {
       if (this.files && this.files[0]) {
@@ -57,3 +66,9 @@ function initData() {
   );
 }
 console.log(user);
+
+function fileName(uid) {
+  let date = new Date();
+  let name = uid+'-'+ date.getFullYear() +'-'+ date.getMonth() +'-'+ date.getDate() +'-'+ date.getHours() +'-'+ date.getMinutes() +'-'+ date.getSeconds() +'.jpg'
+  return name
+}

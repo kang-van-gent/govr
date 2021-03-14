@@ -33,7 +33,8 @@ var app = new Vue({
     categories: [],
     name: "Hi from data",
     user: user,
-    contentCat: []
+    contentCat: [],
+    cont: ''
   },
   methods: {
     toLogin: function () {
@@ -54,7 +55,7 @@ var app = new Vue({
     toWebXR: function (content) {
       localStorage.setItem('Content', JSON.stringify(content))
       window.location.href = PAGES.WEBXR;
-      console.log(content)
+      
     },
 
     logout: () => {

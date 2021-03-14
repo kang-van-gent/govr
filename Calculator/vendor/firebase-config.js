@@ -13,12 +13,19 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const db = firebase.firestore();
+const storage = firebase.storage()
 
+//firebase firestore
 const usersRef = db.collection("Users");
 const userInfoRef = db.collection("UserInfo");
 const contentsRef = db.collection("Contents");
 const linksRef = db.collection("Links");
 const categoryRef = db.collection("Category");
+
+//firebase storage
+const imgRef = storage.ref().child('360');
+const thumpRef = storage.ref().child('thumpnail');
+
 
 const DB = [
   USER = 'USER'

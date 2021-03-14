@@ -10,96 +10,83 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
 
     <script src="vendor/jquery.min.js"></script>
+
     <style>
-        .upload-form {
+        #app {
             display: flex;
-            margin: 130px auto;
-            width: 1000px;
-            height: 70vh;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
+            margin-top :200px;
         }
 
-        .img-upload {
-            width: 50%;
-            height: 100%;
+        .dropzone {
+            cursor: pointer;
+            border: 2px dashed #0087F7;
+            border-radius: 5px;
+            background: white;
+            min-height: 200px;
+            box-sizing: border-box;
+            padding: 54px 54px;
+            text-align: center;
+        }
+        .dz-button{
+            background: transparent;
+            border: none;
+        }
+        .img,
+        .detail{
+            padding: 5px;
+            background: white;
+            width: 500px;
+        }
+        .btn-form{
+            margin-left: 310px;
         }
 
-        .content-upload {
-            width: 50%;
-            height: 100%;
-        }
 
-        .img-upload .label {
-            height: 250px;
-            background: #fee6e2;
-            display: block;
-            margin: 202px 20px;
-            border-radius: 10px;
-            border: 5px dashed lightseagreen;
-
-        }
-
-        .img-upload .label .img {
-            display: block;
-            margin: auto;
-            transform: translateY(110px);
-        }
-
-        .form {
-            margin-top: 160px;
-        }
-
-        .btn-form {
-            margin: 10px 10px 0 300px;
-        }
-
-        .btn {
-            margin-left: 5px;
-            transition: 0.2s;
-        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <form class="upload-form">
-            <div class="img-upload">
-                <div class="label">
-                    <input v-model="image360" type="file" class="img" name="image360" @change="onFileChange">
-                    <div id="preview">
-                        <img v-if="image360" :src="image360" />
-                      </div>
+        <div class="img">
+            <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
+                <div class="dz-message needsclick">
+                    <button type="button" class="dz-button">Drop files or click to upload.</button>
                 </div>
-            </div>
-            <div class="content-upload">
-                <div class="form">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input v-model="title" type="text" class="form-control" id="title" name="title" placeholder="Untitled">
-                    </div>
-                    <div class="mb-3">
-                        <textarea v-model="description" class="form-control" id="description" name="description" rows="6"
-                            placeholder="Description"></textarea>
-                    </div>
-                    <input v-model="category" class="form-control" list="datalistOptions" id="category" name="category"
-                        placeholder="Category">
-                    <datalist id="datalistOptions">
-                        <option v-for="category in categories" :value=category.title>
-                    </datalist>
-                    
-                </form>
-                <div class="btn-form">
-                    <button v-on:click="toHome" type="button" class="btn btn-outline-primary">Cancle</button>
+            </form>
+        </div>
 
-                    <button v-on:click="create(title, description, category, image360)" type="button" class="btn btn-primary">Create</button>
-                </div>
+        <div class="detail">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input v-model="title" type="text" class="form-control" id="title" name="title" placeholder="Untitled">
+            </div>
+            <div class="mb-3">
+                <textarea v-model="description" class="form-control " id="description" name="description" rows="6"
+                    placeholder="Description"></textarea>
+            </div>
+            <div class="mb-3">
+                <input v-model="category" class="form-control" list="datalistOptions" id="category" name="category"
+                    placeholder="Category">
+                <datalist id="datalistOptions">
+                    <option v-for="category in categories" :value=category.label>
+                </datalist>
+            </div>
+
+
+            <div class="btn-form">
+                <button v-on:click="toHome" type="button" class="btn btn-outline-primary">Cancle</button>
+
+                <button v-on:click="create(title, description, category)" type="button"
+                    class="btn btn-primary">Create</button>
             </div>
         </div>
-    </div>
 
     </div>
 </body>
+<script src="./dropzone-5.7.0/dropzone-5.7.0/dist/dropzone.js"></script>
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -115,6 +102,7 @@
 <!-- Add Firebase products that you want to use -->
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 <!--REQUIRED SCRIPTS//-->
 <script src="vendor/contents.js"></script>
 <script src="vendor/category.js"></script>

@@ -123,7 +123,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-3" v-for="content in contents " >
-            <div class="mn-img" @click="toWebXR(content)">
+            <div v-model="cont" class="mn-img" @click="toWebXR(content)">
               <img :src="content.image360" />
               <div class="mn-title">
                 <a href="webxr.html">{{content.title}}</a>
@@ -265,6 +265,7 @@
   <!-- Add Firebase products that you want to use -->
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
   <!--REQUIRED SCRIPTS//-->
   <script src="vendor/contents.js"></script>
   <script src="vendor/category.js"></script>
