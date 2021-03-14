@@ -34,7 +34,7 @@ var app = new Vue({
     name: "Hi from data",
     user: user,
     contentCat: [],
-    cont: ''
+
   },
   methods: {
     toLogin: function () {

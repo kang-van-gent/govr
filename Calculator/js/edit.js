@@ -15,6 +15,15 @@ var app = new Vue({
     },
     create: async (title, des, cat) => {
       try {
+        let id = user.uid
+        let i = Dropzone.forElement("#demo-upload");
+        var message = i.files[0].dataURL;
+        const arr = message.split('data:image/jpeg;base64,')
+        let name = fileName(id)
+        let ref = imgRef.child(name)
+        await ref.putString(arr[1], "base64").then((snapshot) => {
+          console.log(name);
+        });
         let data = {
           uid: user.uid,
           image360: name,
@@ -28,18 +37,10 @@ var app = new Vue({
           disabled: false,
           thumbnail: "",
         };
-        let i = Dropzone.forElement("#demo-upload");
-        var message = i.files[0].dataURL;
-        const arr = message.split('data:image/jpeg;base64,')
-        let name = fileName(data.uid)
-        let ref = imgRef.child(name)
-        await ref.putString(arr[1], "base64").then((snapshot) => {
-          console.log(name);
-        });
         
         await contentsRef.doc().set(data)
       } catch (err) {
-        console.log(err.message);
+        console.log(err);
       }
       
     },
