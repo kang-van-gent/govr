@@ -20,9 +20,9 @@ const contentsRef = db.collection("Contents");
 const linksRef = db.collection("Links");
 const categoryRef = db.collection("Category");
 
-const DB = {
-
-};
+const DB = [
+  USER = 'USER'
+];
 
 const PAGES = {
   INDEX: "index.html",
@@ -31,5 +31,7 @@ const PAGES = {
   REGISTER: "register.html",
   MAIN: "main.html",
   MYPROFILE: "my-profile.html",
-  CATEGORY: "category.html"
+  CATEGORY: "category.html",
+  UPLOAD: "upload.html",
+  WEBXR: "webxr.html"
 };

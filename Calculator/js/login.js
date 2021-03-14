@@ -15,51 +15,71 @@ var app = new Vue({
         .signInWithEmailAndPassword(this.email, this.password)
         .then(async (userCredential) => {
           // Signed in
-          var user = userCredential.user;
+          const user = userCredential.user;
 
-          localStorage.setItem(JSON.stringify(user.uid), JSON.stringify(user));
+          localStorage.setItem(DB.USER, JSON.stringify(user));
 
-          //window.location.href = PAGES.MAIN;
+          window.location.href = PAGES.INDEX;
           // ...
           let data = (await usersRef.doc(user.uid).get()).data();
           this.userLoggedin = user.uid
           console.log(data);
         })
         .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
+          let errorMessage = error.message;
           console.log(errorMessage);
         });
     },
-    register: function () {
+    register1: function () {
       const username = this.username;
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(async (userCredential) => {
           // Signed in
-          var user = userCredential.user;
+          const user = userCredential.user;
           user.updateProfile({
             displayName: username,
           });
-          const USER = JSON.parse(user.uid);
-          localStorage.setItem(DB.USER, JSON.stringify(user));
+          //localStorage.setItem(DB.USER, JSON.stringify(user));
 
           // ...
-          let data = await usersRef.doc(user.uid).set({
+          /*await usersRef.doc(user.uid).set({
             displayName: username,
             email: user.email,
             photoURL: null,
             uid: user.uid,
-          });
-          window.location.href = PAGES.MAIN;
+          });*/
+          let data = {
+            displayName: username,
+            email: user.email,
+            photoURL: null,
+            uid: user.uid,
+          };
+          //window.location.href = PAGES.INDEX;
+          console.log(data)
         })
         .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
+          const errorMessage = error.message;
           // ..
           console.log(errorMessage);
         });
+    },
+    register: function () {
+      const username = this.username;
+       try{
+         const data = {
+           username : username,
+           email: this.email,
+           password: this.password
+         }
+         console.log(data)
+       }catch(e){
+         console.log(e.massage)
+       }
+          
+         
+        
     },
   },
 });

@@ -21,9 +21,9 @@
     return false;
   });
 })(jQuery);
-let user = JSON.parse(localStorage.getItem(DB));
-
-
+//Get uer from local storage
+let user = JSON.parse(localStorage.getItem(DB.USER));
+//Get category from local storage
 let category = localStorage.getItem("Category");
 
 var app = new Vue({
@@ -33,8 +33,7 @@ var app = new Vue({
     categories: [],
     name: "Hi from data",
     user: user,
-    contentCat: [],
-    category: category,
+    contentCat: []
   },
   methods: {
     toLogin: function () {
@@ -49,6 +48,15 @@ var app = new Vue({
     toProfile: function () {
       window.location.href = PAGES.MYPROFILE;
     },
+    toUpload: function () {
+      window.location.href = PAGES.UPLOAD;
+    },
+    toWebXR: function (content) {
+      localStorage.setItem('Content', JSON.stringify(content))
+      window.location.href = PAGES.WEBXR;
+      console.log(content)
+    },
+
     logout: () => {
       firebase
         .auth()
@@ -82,14 +90,12 @@ function initData() {
     "https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/newest?lim=20&desc=true",
     function (data) {
       app.contents = data;
-      //console.log(data)
     }
   );
   $.get(
     `https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/bycategory?lim=20&desc=true&cat=${category}`,
     function (data) {
       app.contentCat = data;
-      console.log(app.contentCat);
     }
   );
 }

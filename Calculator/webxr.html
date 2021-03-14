@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://github.com/supermedium/three.js"></script>
+
+    <style>
+
+    </style>
 </head>
+
 <body>
-    <a-scene>
-        <a-sky src="https://live.staticflickr.com/3952/15561371221_aab49fcb44_b.jpg"></a-sky>
-        
-    </a-scene>
+    <div id="app">
+        <div class="frame">
+            <a-scene>
+                <a-sky :src="content.image360">
+            </a-scene>
+        </div>
+    </div>
+
+
 </body>
+
 </html>

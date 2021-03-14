@@ -146,14 +146,14 @@
                     <div class="pro-nav">
                         <div class="detail">
                             <div class="pic">
-                                <img src="">
+                                <img src="assets/icons/calculator.png">
                             </div>
                             <div class="name">
                                 Guest
                             </div>
                         </div>
                         <div id="list-example" class="tabs">
-                            <a class="my-upload " href="#list-item-1">My Upload</a>
+                            <a class="my-upload " href="#list-item-1">My Uploads</a>
                             <a class="my-add " href="#list-item-2">My Address</a>
                             <a class="my-pay " href="#list-item-3">Payment</a>
                         </div>
@@ -163,13 +163,13 @@
                 <div class="pro-body col-md-5">
                     <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example">
                         <div id="list-item-1" class="list-item col" data-bs-target=".my-upload">
-                            <h4>My upload</h4>
+                            <h4>My uploads</h4>
                             <div class="main-news">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-lg-6" v-for="content in contents ">
                                             <div class="mn-img">
-                                                <img :src="content.image" />
+                                                <img :src="content.image360" />
                                                 <div class="mn-title">
                                                     <a href="">{{content.title}}</a>
                                                 </div>

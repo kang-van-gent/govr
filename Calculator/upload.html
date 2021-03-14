@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="vendor/jquery.min.js"></script>
+    <style>
+        .upload-form {
+            display: flex;
+            margin: 130px auto;
+            width: 1000px;
+            height: 70vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img-upload {
+            width: 50%;
+            height: 100%;
+        }
+
+        .content-upload {
+            width: 50%;
+            height: 100%;
+        }
+
+        .img-upload .label {
+            height: 250px;
+            background: #fee6e2;
+            display: block;
+            margin: 202px 20px;
+            border-radius: 10px;
+            border: 5px dashed lightseagreen;
+
+        }
+
+        .img-upload .label .img {
+            display: block;
+            margin: auto;
+            transform: translateY(110px);
+        }
+
+        .form {
+            margin-top: 160px;
+        }
+
+        .btn-form {
+            margin: 10px 10px 0 300px;
+        }
+
+        .btn {
+            margin-left: 5px;
+            transition: 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <form class="upload-form">
+            <div class="img-upload">
+                <div class="label">
+                    <input v-model="image360" type="file" class="img" name="image360" @change="onFileChange">
+                    <div id="preview">
+                        <img v-if="image360" :src="image360" />
+                      </div>
+                </div>
+            </div>
+            <div class="content-upload">
+                <div class="form">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input v-model="title" type="text" class="form-control" id="title" name="title" placeholder="Untitled">
+                    </div>
+                    <div class="mb-3">
+                        <textarea v-model="description" class="form-control" id="description" name="description" rows="6"
+                            placeholder="Description"></textarea>
+                    </div>
+                    <input v-model="category" class="form-control" list="datalistOptions" id="category" name="category"
+                        placeholder="Category">
+                    <datalist id="datalistOptions">
+                        <option v-for="category in categories" :value=category.title>
+                    </datalist>
+                    
+                </form>
+                <div class="btn-form">
+                    <button v-on:click="toHome" type="button" class="btn btn-outline-primary">Cancle</button>
+
+                    <button v-on:click="create(title, description, category, image360)" type="button" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</body>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<!--//REQUIRED SCRIPTS-->
+<script src="vendor/fontawesome.js"></script>
+<script src="vendor/vue.js"></script>
+<script src="vendor/vue-router.js"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+<!--REQUIRED SCRIPTS//-->
+<script src="vendor/contents.js"></script>
+<script src="vendor/category.js"></script>
+<script src="vendor/firebase-config.js"></script>
+
+<script src="js/edit.js"></script>
+
+</html>
