@@ -21,10 +21,12 @@
     return false;
   });
 })(jQuery);
+
+
 //Get uer from local storage
-let user = JSON.parse(localStorage.getItem(DB.USER));
+let user = localStorage.getItem(DB.AUTH);
 //Get category from local storage
-let category = localStorage.getItem("Category");
+let category = localStorage.getItem(DB.CATEGORY);
 
 var app = new Vue({
   el: "#app",
@@ -53,7 +55,7 @@ var app = new Vue({
       window.location.href = PAGES.UPLOAD;
     },
     toWebXR: function (content) {
-      localStorage.setItem('Content', JSON.stringify(content))
+      localStorage.setItem(DB.CONTENT, JSON.stringify(content))
       window.location.href = PAGES.WEBXR;
       
     },
@@ -64,6 +66,8 @@ var app = new Vue({
         .signOut()
         .then(() => {
           localStorage.removeItem(DB.USER);
+          localStorage.removeItem(DB.AUTH);
+          localStorage.removeItem(DB.USERINFO);
 
           window.location.href = PAGES.INDEX;
         })
@@ -72,7 +76,7 @@ var app = new Vue({
         });
     },
     getCat: (cat) => {
-      localStorage.setItem("Category", cat);
+      localStorage.setItem(DB.CATEGORY, cat);
       window.location.href = PAGES.CATEGORY;
     }
   },
@@ -80,23 +84,16 @@ var app = new Vue({
 
 initData();
 function initData() {
-  $.get(
-    "https://us-central1-govr-42c7d.cloudfunctions.net/api/categories/all",
-    function (data) {
-      app.categories = data;
-    }
-  );
+   apis.allCategories().then(data => {
+    app.categories = data;
+  });
 
-  $.get(
-    "https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/newest?lim=20&desc=true",
-    function (data) {
-      app.contents = data;
-    }
-  );
-  $.get(
-    `https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/bycategory?lim=20&desc=true&cat=${category}`,
-    function (data) {
-      app.contentCat = data;
-    }
-  );
+   apis.getNewestContent().then(data => {
+    app.contents = data;
+  })
+
+   apis.getContentByCategory(category).then(data => {
+    app.contentCat = data;
+  })
+
 }

@@ -1,12 +1,11 @@
-
-
 var app = new Vue({
   el: "#app",
   data: {
     username: "",
     email: "",
     password: "",
-    userLoggedin: []
+    userLoggedin: [],
+    userData: []
   },
   methods: {
     login: function () {
@@ -17,7 +16,7 @@ var app = new Vue({
           // Signed in
           const user = userCredential.user;
 
-          localStorage.setItem(DB.USER, JSON.stringify(user));
+          localStorage.setItem(DB.AUTH, JSON.stringify(user));
 
           window.location.href = PAGES.INDEX;
           // ...
@@ -30,7 +29,7 @@ var app = new Vue({
           console.log(errorMessage);
         });
     },
-    register1: function () {
+    register: function () {
       const username = this.username;
       firebase
         .auth()
@@ -41,45 +40,51 @@ var app = new Vue({
           user.updateProfile({
             displayName: username,
           });
-          //localStorage.setItem(DB.USER, JSON.stringify(user));
+          localStorage.setItem(DB.AUTH, JSON.stringify(user));
 
-          // ...
-          /*await usersRef.doc(user.uid).set({
-            displayName: username,
-            email: user.email,
-            photoURL: null,
-            uid: user.uid,
-          });*/
-          let data = {
+          //Save user and userInfo to firebase
+          //User
+          let localUser = {
             displayName: username,
             email: user.email,
             photoURL: null,
             uid: user.uid,
           };
-          //window.location.href = PAGES.INDEX;
-          console.log(data)
+          localStorage.setItem(DB.USER, JSON.stringify(localUser))
+          //UserInfo
+          let userInfo = {
+            uid : user.uid,
+            address : '',
+            address2 : '',
+            town : '',
+            province : '',
+            country : '',
+            postal_code : '',
+            phone : '',
+            fname : '',
+            lname : '',
+            type : '',
+            limitUploads : 5
+          }
+          localStorage.setItem(DB.USERINFO , JSON.stringify(userInfo))
+
+          await saveUser(localUser,userInfo)          //save user to firebase
+          window.location.href = PAGES.INDEX;
+
         })
         .catch((error) => {
           const errorMessage = error.message;
-          // ..
           console.log(errorMessage);
         });
     },
-    register: function () {
-      const username = this.username;
-       try{
-         const data = {
-           username : username,
-           email: this.email,
-           password: this.password
-         }
-         console.log(data)
-       }catch(e){
-         console.log(e.massage)
-       }
-          
-         
-        
-    },
   },
 });
+
+function saveUser(user, userInfo) {
+  $.post("https://us-central1-govr-42c7d.cloudfunctions.net/api/users/register", {u: user, uinfo: userInfo}, function (data) {
+      console.log(data)
+    }
+  );
+}
+
+

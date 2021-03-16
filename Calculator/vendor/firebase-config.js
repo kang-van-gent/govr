@@ -28,7 +28,11 @@ const thumpRef = storage.ref().child('thumpnail');
 
 
 const DB = [
-  USER = 'USER'
+  USER = 'USER',
+  AUTH = 'AUTH',
+  USERINFO = 'UESRINFO',
+  CONTENT = 'Content',
+  CATEGORY = 'Category'
 ];
 
 const PAGES = {

@@ -1,5 +1,5 @@
-const content = JSON.parse(localStorage.getItem("Content"));
-var img360 = imgRef.child('wcGVO942o2Ol92ljAJyxImzAwfp2-2021-2-14-18-42-23.jpg');
+const content = JSON.parse(localStorage.getItem(DB.CONTENT));
+var img360 = imgRef.child(content.image360);
 
 intialApp()
 
