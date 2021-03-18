@@ -34,6 +34,54 @@ var apis = {
                 reject(false)
             })
         })
+    },
+    getContentById : (id) => {
+        return new Promise((resolve, reject) => {
+            $.get(
+                `https://us-central1-govr-42c7d.cloudfunctions.net/api/contents?id=${id}`,
+                function (data) {
+                    resolve(data)
+                }
+            ).fail(() => {
+                reject(false)
+            })
+        })
+    },
+    registerUser: function (user, userInfo) {
+        return new Promise((resolve, reject) => {
+            $.post(
+                "https://us-central1-govr-42c7d.cloudfunctions.net/api/users/register", { u: user, uinfo: userInfo },
+                function (data) {
+                    resolve(data)
+                }
+            ).fail(function(error){
+                reject(error)
+            })
+        })
+    },
+    getUserInfo: function(uid){
+        return new Promise((resolve, reject) => {
+            $.get(
+                `https://us-central1-govr-42c7d.cloudfunctions.net/api/userinfo?uid=${uid}`,
+                function (data) {
+                    resolve(data)
+                }
+            ).fail(function(error){
+                reject(error)
+            })
+        })
+    },
+    getUser: function(uid){
+        return new Promise((resolve, reject) => {
+            $.get(
+                `https://us-central1-govr-42c7d.cloudfunctions.net/api/users?uid=${uid}`,
+                function (data) {
+                    resolve(data)
+                }
+            ).fail(function(error){
+                reject(error)
+            })
+        })
     }
 
 }
