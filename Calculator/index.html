@@ -45,8 +45,8 @@
         <div class="row align-items-center">
           <div class="col-lg-3 col-md-4">
             <div class="b-logo">
-              <a href="index.html">
-                <!---<img src="../img/logo.png" alt="Logo">--->
+              <a v-bind:href="PAGES.INDEX">
+                <img src="assets/images/govr-logo-512.png" alt="Logo">
               </a>
             </div>
           </div>
@@ -56,33 +56,14 @@
                 <!---<img src="../img/ads-1.jpg" alt="Ads">--->
               </a>
             </div>
-          </div>
-          <div class="col-lg-3 col-md-4">
-            <div class="d-grid gap-2 offset-md-8" v-if="user !== null">
-              <div class="btn-group">
-                <button class="btn btn-secondary btn-sm" type="button" v-on:click="toProfile">
-                  <div v-if="user.imageURL == null">
-                    <img src="assets/icons/calculator.png" />
-                  </div>
-                  <div v-else>
-                    <img :src=user.imageUR />
-                  </div>
-
-                </button>
-
-                <button type="button" class="btn btn-sm btn-secondary dropdown-toggle " data-toggle="dropdown"
-                  aria-expanded="false">
-                </button>
-                <ul class="dropdown-menu">
-                  <li><button class="dropdown-item" type="button" v-on:click="toProfile">My Profile</button></li>
-                  <li><button class="dropdown-item" type="button" v-on:click="logout">log out</button></li>
-                </ul>
-              </div>
-            </div>
-            <div class="d-grid gap-2 d-md-block" v-else>
-              <button v-on:click="toLogin" class="btn btn-outline-primary" type="button">Log
-                in</button>
-              <button v-on:click="toRegister" class="btn btn-primary" type="button">Register</button>
+          </div>-->
+          <div class="col-lg-9 col-md-7" id="social">
+            <div class="text-right">
+              <a href="" class="ml-3"><i class="fab fa-twitter"></i></a>
+              <a href="" class="ml-3"><i class="fab fa-facebook-f"></i></a>
+              <a href="" class="ml-3"><i class="fab fa-linkedin-in"></i></a>
+              <a href="" class="ml-3"><i class="fab fa-instagram"></i></a>
+              <a href="" class="ml-3"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
         </div>
@@ -101,17 +82,52 @@
 
           <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav mr-auto">
-              <a  class="nav-item nav-link active">Home</a>
-
-              <a style="cursor: pointer;" v-on:click="toProfile" class="nav-item nav-link">My Profile</a>
+              <a v-bind:href="PAGES.INDEX" class="nav-item nav-link active">Home</a>
+              <a v-bind:href="PAGES.MYPROFILE" class="nav-item nav-link">My Profile</a>
             </div>
-            <div class="social ml-auto">
+            <div class="d-grid gap-2" v-if="user !== null">
+              <div class="btn-group profile-h">
+                <button class="btn btn-primary profile-w" type="button" v-on:click="toProfile">
+                  <div>
+                    <img v-if="user.imageURL == null" src="assets/images/user.svg" class="profile-r" />
+                    <img v-else :src=user.imageUR class="profile-r" />
+                  </div>
+                </button>
+
+                <button type="button" class="btn btn-primary dropdown-toggle " data-toggle="dropdown"
+                  aria-expanded="false">
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <button class="dropdown-item" type="button" v-on:click="toUpload">
+                      <i class="fas fa-plus"></i>
+                      <span class="ml-1">Add Upload</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" type="button" v-on:click="toProfile">
+                      My Profile
+                    </button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" type="button" v-on:click="logout">
+                      Log Out
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="social ml-auto d-grid gap-2 d-md-block" v-else>
+              <button v-on:click="toLogin" class="btn btn-outline-primary" type="button">Log in</button>
+              <button v-on:click="toRegister" class="btn btn-primary" type="button">Register</button>
+            </div>
+            <!--<div class="social ml-auto">
               <a href=""><i class="fab fa-twitter"></i></a>
               <a href=""><i class="fab fa-facebook-f"></i></a>
               <a href=""><i class="fab fa-linkedin-in"></i></a>
               <a href=""><i class="fab fa-instagram"></i></a>
               <a href=""><i class="fab fa-youtube"></i></a>
-            </div>
+            </div>-->
           </div>
         </nav>
       </div>

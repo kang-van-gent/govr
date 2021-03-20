@@ -53,8 +53,8 @@ var app = new Vue({
       window.location.href = PAGES.UPLOAD;
     },
     toWebXR: function (content) {
-      localStorage.setItem('Content', JSON.stringify(content))
-      window.location.href = PAGES.WEBXR;
+      localStorage.setItem(DB.CONTENT, JSON.stringify(content))
+      window.location.href = PAGES.WEBXR + `?id=${content.id}`;
       
     },
 
@@ -72,7 +72,11 @@ var app = new Vue({
         });
     },
     getCat: (cat) => {
+<<<<<<< HEAD
       localStorage.setItem("Category", cat);
+=======
+      localStorage.setItem(DB.CATEGORY, cat);
+>>>>>>> parent of 7b8849e (update-page-ui)
       window.location.href = PAGES.CATEGORY;
     }
   },
@@ -80,6 +84,7 @@ var app = new Vue({
 
 initData();
 function initData() {
+<<<<<<< HEAD
   $.get(
     "https://us-central1-govr-42c7d.cloudfunctions.net/api/categories/all",
     function (data) {
@@ -99,4 +104,24 @@ function initData() {
       app.contentCat = data;
     }
   );
+=======
+  app.isLoading = true;
+
+  apis.allCategories().then(data => {
+    app.categories = data;
+  }).catch(error => {
+    app.isError = true;
+    app.error = error
+  });
+
+  apis.getNewestContent().then(data => {
+    app.contents = data;
+    app.isLoading = false;
+    app.isError = false;
+  }).catch(error => {
+    app.isLoading = false;
+    app.isError = true;
+    app.error = error
+  });
+>>>>>>> parent of 7b8849e (update-page-ui)
 }
