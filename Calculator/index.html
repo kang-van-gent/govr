@@ -5,10 +5,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
+
+  <!-- Favicon -->
+  <link href="./assets/favicon.svg" rel="icon" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet" />
   <!-- CSS Libraries -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+
   <!-- Template Stylesheet -->
   <link href="css/main.css" rel="stylesheet" />
 
@@ -16,54 +20,43 @@
 
 <body>
   <div id="app">
-    <!-- Top Bar Start -->
-    <div class="top-bar">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="tb-contact">
-              <p><i class="fas fa-envelope"></i>info@mail.com</p>
-              <p><i class="fas fa-phone-alt"></i>+012 345 6789</p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="tb-menu">
-              <a href="">About</a>
-              <a href="">Privacy</a>
-              <a href="">Terms</a>
-              <a href="">Contact</a>
-            </div>
-          </div>
-        </div>
+    <div v-if="isLoading" class="modal-dialog modal-dialog-centered">
+      <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden"></span>
       </div>
+      <span class="text-primary">Loading...</span>
     </div>
-    <!-- Top Bar Start -->
+
+    <div class="alert alert-danger alert-dismissible fade show" v-if="isError" role="alert">
+      <i class="far fa-times-circle"></i>
+      <span class="ml-2">{{error}}</span>
+    </div>
 
     <!-- Brand Start -->
     <div class="brand">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-lg-3 col-md-4">
+          <div class="col-lg-3 col-md-5">
             <div class="b-logo">
               <a v-bind:href="PAGES.INDEX">
-                <img src="assets/images/govr-logo-512.png" alt="Logo">
+                <img v-bind:src="ASSETS.LOGO512" alt="Logo">
               </a>
             </div>
           </div>
-          <div class="col-lg-6 col-md-4">
+          <!--<div class="col-lg-6 col-md-3">
             <div class="b-ads">
               <a href="https://htmlcodex.com">
-                <!---<img src="../img/ads-1.jpg" alt="Ads">--->
+                <img src="../img/ads-1.jpg" alt="Ads">
               </a>
             </div>
           </div>-->
           <div class="col-lg-9 col-md-7" id="social">
             <div class="text-right">
-              <a href="" class="ml-3"><i class="fab fa-twitter"></i></a>
-              <a href="" class="ml-3"><i class="fab fa-facebook-f"></i></a>
-              <a href="" class="ml-3"><i class="fab fa-linkedin-in"></i></a>
-              <a href="" class="ml-3"><i class="fab fa-instagram"></i></a>
-              <a href="" class="ml-3"><i class="fab fa-youtube"></i></a>
+              <a v-bind:href="LINKS.TWITTER" class="ml-3"><i class="fab fa-twitter"></i></a>
+              <a v-bind:href="LINKS.FACEBOOK" class="ml-3"><i class="fab fa-facebook-f"></i></a>
+              <a v-bind:href="LINKS.LINKEDIN" class="ml-3"><i class="fab fa-linkedin-in"></i></a>
+              <a v-bind:href="LINKS.INSTAGRAM" class="ml-3"><i class="fab fa-instagram"></i></a>
+              <a v-bind:href="LINKS.YOUTUBE" class="ml-3"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
         </div>
@@ -87,47 +80,43 @@
             </div>
             <div class="d-grid gap-2" v-if="user !== null">
               <div class="btn-group profile-h">
-                <button class="btn btn-primary profile-w" type="button" v-on:click="toProfile">
+                <a class="btn btn-primary profile-w" type="button" :href="PAGES.MYPROFILE">
                   <div>
-                    <img v-if="user.imageURL == null" src="assets/images/user.svg" class="profile-r" />
-                    <img v-else :src=user.imageUR class="profile-r" />
+                    <img v-if="user.photoURL == null || user.photoURL == ''" src="assets/images/user.svg"
+                      class="profile-r" />
+                    <img v-else :src="user.photoURL" class="profile-r" />
                   </div>
-                </button>
+                </a>
 
                 <button type="button" class="btn btn-primary dropdown-toggle " data-toggle="dropdown"
                   aria-expanded="false">
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <button class="dropdown-item" type="button" v-on:click="toUpload">
+                    <a class="dropdown-item" type="button" :href="PAGES.UPLOAD">
                       <i class="fas fa-plus"></i>
                       <span class="ml-1">Add Upload</span>
-                    </button>
+                    </a>
                   </li>
                   <li>
-                    <button class="dropdown-item" type="button" v-on:click="toProfile">
+                    <a class="dropdown-item" type="button" :href="PAGES.MYPROFILE">
                       My Profile
-                    </button>
+                    </a>
                   </li>
                   <li>
-                    <button class="dropdown-item" type="button" v-on:click="logout">
+                    <a class="dropdown-item" type="button" :href="PAGES.LOGOUT">
                       Log Out
-                    </button>
+                    </a>
                   </li>
                 </ul>
               </div>
             </div>
             <div class="social ml-auto d-grid gap-2 d-md-block" v-else>
-              <button v-on:click="toLogin" class="btn btn-outline-primary" type="button">Log in</button>
-              <button v-on:click="toRegister" class="btn btn-primary" type="button">Register</button>
+              <button v-on:click="window.location.href = PAGES.LOGIN" class="btn btn-primary" type="button">Log
+                in</button>
+              <button v-on:click="window.location.href = PAGES.REGISTER" class="btn btn-primary"
+                type="button">Register</button>
             </div>
-            <!--<div class="social ml-auto">
-              <a href=""><i class="fab fa-twitter"></i></a>
-              <a href=""><i class="fab fa-facebook-f"></i></a>
-              <a href=""><i class="fab fa-linkedin-in"></i></a>
-              <a href=""><i class="fab fa-instagram"></i></a>
-              <a href=""><i class="fab fa-youtube"></i></a>
-            </div>-->
           </div>
         </nav>
       </div>
@@ -138,26 +127,23 @@
     <div class="main-news">
       <div class="container">
         <div class="row">
-          <div class="col-md-3" v-for="content in contents " >
-            <div class="mn-img" @click="toWebXR(content)">
+          <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents ">
+            <div class="mn-img" v-on:click="toWebXR(content)">
               <img :src="content.image360" />
               <div class="mn-title">
                 <a href="webxr.html">{{content.title}}</a>
               </div>
             </div>
           </div>
-          <div class="col-md-3" style="align-self: center;  height: 250px;">
-            <button v-on:click="toUpload" class="btn btn-cate" style="height: 100%;"> + Add</button>
-          </div>
+
         </div>
 
         <!-- Category Start-->
         <div class="row category">
           <div class="col-md-4" v-for="category in categories ">
-            <button v-on:click="getCat(category.label)" class="btn btn-cate" type="submit">{{category.title}}</button>
+            <button v-on:click="goToCat(category)" class="btn btn-cate" type="submit">{{category.title}}</button>
           </div>
         </div>
-
         <!-- Category End-->
 
       </div>
@@ -284,11 +270,10 @@
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
   <!--REQUIRED SCRIPTS//-->
-  <script src="vendor/contents.js"></script>
-  <script src="vendor/category.js"></script>
   <script src="vendor/firebase-config.js"></script>
 
   <!-- Template Javascript -->
+  <script src="js/apis.js"></script>
   <script src="js/main.js"></script>
 
 

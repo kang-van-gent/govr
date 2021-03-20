@@ -255,8 +255,8 @@ h6 {
 }
 
 .btn-group .btn {
-  max-width: 50px;
-  max-height: 50px;
+  max-width: 60px;
+  max-height: 52px;
 }
 .btn-group .btn img{
   width: 100%;
@@ -708,4 +708,20 @@ h6 {
   #social {
       display: none;
   }
+}
+
+.text-primary{
+  color: #082c44 !important;
+}
+
+.text-accent{
+  color: #fe2c89 !important;
+}
+
+.text-fourth{
+  color: #ffa94c !important;
+}
+
+.bg-primary{
+  background-color: #082c44 !important;
 }
