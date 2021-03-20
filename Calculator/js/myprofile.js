@@ -39,30 +39,40 @@ var app = new Vue({
     user: user,
     contentCat: [],
     cont: '',
+    link: {
+      isLoading: false,
+      isCopied: false
+    },
     isLoading: false,
     isError: false,
     error: ""
   },
   methods: {
-    toLogin: function () {
-      window.location.href = PAGES.LOGIN;
+    getSharedLink: function (content) {
+      $('#linkModal').modal()
+      this.link.isCopied = false
+      this.link.isLoading = true
+      this.link.title = content.title
+      this.link.url = null
+      apis.getLink(content.id).then(data => {
+        this.link.isLoading = false
+        this.link.url = data.url
+        console.log(data)
+      }).catch(error => {
+        this.link.isLoading = false
+      })
     },
-    toRegister: function () {
-      window.location.href = PAGES.REGISTER;
+    copyLink: function () {
+      this.link.isCopied = true
+      const result = copyToClipboard(this.link.url)
+      console.log(result, this.link.url)
     },
-    toHome: function () {
-      window.location.href = PAGES.INDEX;
-    },
-    toProfile: function () {
-      window.location.href = PAGES.MYPROFILE;
-    },
-    toUpload: function () {
-      window.location.href = PAGES.UPLOAD;
-    },
-    toWebXR: function (content) {
-      window.location.href = PAGES.WEBXR + `?id=${content.id}`;   
-    },
+    info: function (id) {
 
+    },
+    delete: function (id) {
+
+    },
     logout: () => {
       firebase
         .auth()
@@ -79,7 +89,8 @@ var app = new Vue({
         });
     },
     getCat: (cat) => {
-      window.location.href = PAGES.CATEGORY + `?label=${cat}`;
+      localStorage.setItem(DB.CATEGORY, cat);
+      window.location.href = PAGES.CATEGORY;
     }
   },
 });
@@ -97,8 +108,7 @@ function initData() {
   });
 
   apis.getContentsNewest().then(data => {
- 
-    app.contents = data
+    app.contents = data;
     app.isLoading = false;
     app.isError = false;
   }).catch(error => {
@@ -106,7 +116,11 @@ function initData() {
     app.isError = true;
     app.error = error
   });
-
 }
 
-
+function copyToClipboard(str){
+  var input = document.getElementById('link-url');
+  input.select();
+  var result = document.execCommand('copy');
+  return result
+}

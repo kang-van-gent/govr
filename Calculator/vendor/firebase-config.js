@@ -39,10 +39,24 @@ const PAGES = {
   INDEX: "index.html",
   CALCULATOR: "calculator.html",
   LOGIN: "login.html",
+  LOGOUT: "logout.html",
   REGISTER: "register.html",
   MAIN: "main.html",
   MYPROFILE: "my-profile.html",
   CATEGORY: "category.html",
   UPLOAD: "upload.html",
-  WEBXR: "webxr.html"
+  WEBXR: "webxr.html",
+  EDIT: "edit.html"
 };
+
+const LINKS = {
+  TWITTER: 'twitter.com',
+  FACEBOOK: 'facebook.com',
+  LINKEDIN: 'linkedin.com',
+  INSTAGRAM: 'instagram.com',
+  YOUTUBE: 'youtube.com'
+}
+
+const ASSETS = {
+  LOGO512: 'assets/images/govr-logo-512.png'
+}
