@@ -4,20 +4,17 @@ const id = urlParams.get('id')
 
 ContentById(id)
 
+//var img360 = imgRef.child(content.image360);
+
 var app = new Vue({
   el: '#app',
   data: {
-    content360: [],
-    date: '',
-    cate: ''
+    content360: []
   }
+  
 })
-var scene = new Vue({
-  el: '#scene',
-  data: {
-    content: []
-  }
-})
+
+
 
 function intialApp(img360) {
   img360
@@ -33,10 +30,8 @@ function intialApp(img360) {
       xhr.send();
 
       // Or inserted into an <img> element
-      const img = document.getElementById("img360");
-      const thumb = document.getElementById("thumbnail");
+      var img = document.getElementById("img360");
       img.setAttribute("src", url);
-      thumb.setAttribute("src", url);
       console.log("success");
 
 
@@ -50,11 +45,8 @@ function intialApp(img360) {
 
 function ContentById(id) {
   apis.getContentById(id).then(data => {
-    app.content360 = data
-    console.log(scene.content = data)
-    app.cate = data.cat.title
-    console.log( app.date =new Date(data.date['_seconds']*1000))
-    const img360 = imgRef.child(data.image360);
+    console.log(app.content360 = data)
+    var img360 = imgRef.child(data.image360);
     intialApp(img360)
   })
 }
