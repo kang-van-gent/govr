@@ -6,8 +6,6 @@ const id = urlParams.get('id')
   let auth = JSON.parse(localStorage.getItem(DB.AUTH));
   let user = JSON.parse(localStorage.getItem(DB.USER));
 
-//var img360 = imgRef.child(content.image360);
-
 var app = new Vue({
   el: '#app',
   data: {
@@ -17,12 +15,18 @@ var app = new Vue({
     user: null,
     isLoading: false,
     isError: false,
-    error: ""
+    error: "",
+    img360: ''
   }
-  
 })
-
+var scene = new Vue({
+  el: '#scene',
+  data: {
+    content: {}
+  }
+})
 ContentById(id)
+
 
 function intialApp(img360) {
   img360
@@ -40,9 +44,9 @@ function intialApp(img360) {
       // Or inserted into an <img> element
       var img = document.getElementById("img360");
       img.setAttribute("src", url);
+      this.isLoading = false
+      this.img360 = url
       console.log("success");
-
-
     })
     .catch((error) => {
       // Handle any errors
@@ -54,14 +58,15 @@ function intialApp(img360) {
 function ContentById(id) {
   this.isLoading = true
   apis.getContent(id).then(data => {
-    this.isLoading = false
     this.isError = false
-
-    app.content = data
     app.cate = data.cat.title
-    //console.log( app.date =new Date(data.date['_seconds']*1000))
-    //const img360 = imgRef.child(data.image360);
-    //intialApp(img360)
+    scene.content = data
+    app.content = data
+    app.date =new Date(data.date['_seconds']*1000)
+    console.log(data.image360)
+    var storage = firebase.storage();
+    const img360 = storage.refFromURL(data.image360);    
+    intialApp(img360)
   }).catch(error => {
     this.isLoading = false
     this.isError = true
