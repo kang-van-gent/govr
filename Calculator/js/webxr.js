@@ -5,6 +5,8 @@ intialApp()
 
 //var img360 = imgRef.child(content.image360);
 
+//var img360 = imgRef.child(content.image360);
+
 var app = new Vue({
   el: '#app',
   data: {
