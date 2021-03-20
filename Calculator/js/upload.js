@@ -93,16 +93,17 @@ function fileName(uid) {
     ".jpg";
   return name;
 }
-let pg = document.getElementById("progress");
-pg.setAttribute("style",'width: 60%');
+
+
 async function uploadContent() {
   let ref = imgRef.child(files.name);
   let thRef = thumpRef.child(files.name);
 
-  
+  let pg = document.getElementById("progress");
+  pg.setAttribute("style", "width:0%");
   console.log("uploading ...");
 
-  /*await urlToBlob(files.i360).then(async (blob) => {
+  await urlToBlob(files.i360).then(async (blob) => {
     await ref.put(blob).then(async function (snapshot) {
       await snapshot.ref.getDownloadURL().then((url) => {
         pg.setAttribute("style", "width:30%");
@@ -128,10 +129,10 @@ async function uploadContent() {
         pg.setAttribute("style", "width: 100%");
       }, 1000)
       setTimeout(() => {
-        const m3 = document.getElementById("myModal3");
-        m3.setAttribute("style", "display: none");
-      },500);
-    })*/
+        window.location.href = PAGES.INDEX
+      },1500);
+    })
+
 }
 
 function urlToBlob(url) {
