@@ -3,10 +3,6 @@ var img360 = imgRef.child('wcGVO942o2Ol92ljAJyxImzAwfp2-2021-2-14-18-42-23.jpg')
 
 intialApp()
 
-<<<<<<< HEAD
-function intialApp() {
-    img360
-=======
 //var img360 = imgRef.child(content.image360);
 
 var app = new Vue({
@@ -27,7 +23,6 @@ ContentById(id)
 
 function intialApp(img360) {
   img360
->>>>>>> parent of 5e2d8f1 (working-webxr-page)
     .getDownloadURL()
     .then((url) => {
       // This can be downloaded directly:
@@ -52,8 +47,6 @@ function intialApp(img360) {
     });
 }
 
-<<<<<<< HEAD
-=======
 
 function ContentById(id) {
   this.isLoading = true
@@ -76,4 +69,3 @@ function ContentById(id) {
 
 
 
->>>>>>> parent of 5e2d8f1 (working-webxr-page)
