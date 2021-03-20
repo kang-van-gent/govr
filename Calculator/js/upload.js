@@ -1,5 +1,25 @@
 let user = JSON.parse(localStorage.getItem(DB.USER));
 
+let data = {
+  uid: "",
+  image360: "",
+  location: [],
+  title: "",
+  description: "",
+  category: "",
+  date: new Date(),
+  private: false,
+  published: false,
+  disabled: false,
+  thumbnail: "",
+};
+
+let files = {
+  name: "",
+  i360: "",
+  iThumbnail: "",
+};
+
 var app = new Vue({
   el: "#app",
   data: {
@@ -8,39 +28,37 @@ var app = new Vue({
     category: "",
     categories: [],
     image360: "",
+    loc: "",
   },
   methods: {
     toHome: function () {
       window.location.href = PAGES.INDEX;
     },
-    create: async (title, des, cat) => {
+    setContent: async (title, des, cat) => {
       try {
-        let data = {
-          uid: user.uid,
-          image360: name,
-          location: [],
-          title: title,
-          description: des,
-          category: cat,
-          date: new Date(),
-          private: false,
-          published: true,
-          disabled: false,
-          thumbnail: "",
-        };
+        data.uid = user.uid;
+        data.title = title;
+        data.description = des;
+        data.category = cat;
         let i = Dropzone.forElement("#demo-upload");
         var message = i.files[0].dataURL;
-        const arr = message.split('data:image/jpeg;base64,')
-        let name = fileName(data.uid)
-        let ref = imgRef.child(name)
-        await ref.putString(arr[1], "base64").then((snapshot) => {
-          console.log(name);
-        });
-        await contentsRef.doc().set(data)
+        let name = fileName(data.uid);
+        files.name = name;
+        files.i360 = message;
       } catch (err) {
         console.log(err.message);
       }
-      
+    },
+    setLocation: async (location) => {
+      data.location = [(lat = location), (lng = location)];
+    },
+    setThumbnail: async (privacy) => {
+      let i = Dropzone.forElement("#upload");
+      var message = i.files[0].dataURL;
+      files.iThumbnail = message;
+      data[privacy] = true;
+      console.log(files);
+      uploadContent();
     },
   },
 });
@@ -58,8 +76,77 @@ console.log(user);
 
 function fileName(uid) {
   let date = new Date();
-  let name = uid+'-'+ date.getFullYear() +'-'+ date.getMonth() +'-'+ date.getDate() +'-'+ date.getHours() +'-'+ date.getMinutes() +'-'+ date.getSeconds() +'.jpg'
-  return name
+  let name =
+    uid +
+    "-" +
+    date.getFullYear() +
+    "-" +
+    date.getMonth() +
+    "-" +
+    date.getDate() +
+    "-" +
+    date.getHours() +
+    "-" +
+    date.getMinutes() +
+    "-" +
+    date.getSeconds() +
+    ".jpg";
+  return name;
+}
+let pg = document.getElementById("progress");
+pg.setAttribute("style",'width: 60%');
+async function uploadContent() {
+  let ref = imgRef.child(files.name);
+  let thRef = thumpRef.child(files.name);
+
+  
+  console.log("uploading ...");
+
+  /*await urlToBlob(files.i360).then(async (blob) => {
+    await ref.put(blob).then(async function (snapshot) {
+      await snapshot.ref.getDownloadURL().then((url) => {
+        pg.setAttribute("style", "width:30%");
+        data.image360 = url;
+      });
+    });
+  });
+
+  await urlToBlob(files.iThumbnail).then(async (blob) => {
+    await thRef.put(blob).then(async function (snapshot) {
+      await snapshot.ref.getDownloadURL().then((url) => {
+        pg.setAttribute("style", "width: 60%");
+        data.thumbnail = url;
+      });
+    });
+  });
+
+  await contentsRef
+    .doc()
+    .set(data)
+    .then(() => {
+      setTimeout(() => {
+        pg.setAttribute("style", "width: 100%");
+      }, 1000)
+      setTimeout(() => {
+        const m3 = document.getElementById("myModal3");
+        m3.setAttribute("style", "display: none");
+      },500);
+    })*/
+}
+
+function urlToBlob(url) {
+  return new Promise((resolve, reject) => {
+    var xhr = new XMLHttpRequest();
+    xhr.onerror = reject;
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        resolve(xhr.response);
+      }
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob"; // convert type
+    xhr.send();
+  });
 }
 
 // Get the modal
@@ -78,42 +165,40 @@ var con2 = document.getElementsByClassName("continue2")[0];
 var span = document.getElementsByClassName("close")[0];
 var span2 = document.getElementsByClassName("close2")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
+// When the user clicks the button, open the modal
+btn.onclick = function () {
   modal.style.display = "block";
-}
-
+};
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
-}
-span2.onclick = function() {
+};
+span2.onclick = function () {
   modal2.style.display = "none";
-}
-back.onclick = function() {
+};
+back.onclick = function () {
   modal.style.display = "none";
-}
-con.onclick = function() {
+};
+con.onclick = function () {
   modal.style.display = "none";
-  modal2.style.display = "block"
-}
-back2.onclick = function() {
+  modal2.style.display = "block";
+};
+back2.onclick = function () {
   modal.style.display = "block";
-  modal2.style.display = "none"
-}
-con2.onclick = function() {
-  modal2.style.display = "none"
-  modal3.style.display = "block"
-}
+  modal2.style.display = "none";
+};
+con2.onclick = function () {
+  modal2.style.display = "none";
+  modal3.style.display = "block";
+};
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
   if (event.target == modal3) {
     modal3.style.display = "none";
   }
-}
-
+};
