@@ -92,17 +92,19 @@ async function uploadContent() {
   console.log('uploading ...')
 
   await urlToBlob(files.i360).then(async (blob) => {
-    await ref.put(blob).then(function (snapshot) {
-      snapshot.ref.getDownloadURL().then(() => {
+    await ref.put(blob).then(async (snapshot) => {
+      await snapshot.ref.getDownloadURL().then( (url) => {
         pg.setAttribute('style', 'width:30%')
+        data.image360 = url
       });
     })
   });
 
   await urlToBlob(files.iThumbnail).then(async (blob) => {
-    await thRef.put(blob).then(function (snapshot) {
-      snapshot.ref.getDownloadURL().then(() => {
+    await thRef.put(blob).then(async (snapshot) => {
+      await snapshot.ref.getDownloadURL().then((url) => {
         pg.setAttribute('style', 'width: 60%')
+        data.thumbnail = url
       });
     })
   });
@@ -121,11 +123,11 @@ function urlToBlob(url) {
         resolve(xhr.response);
       }
     };
+
     xhr.open('GET', url);
     xhr.responseType = 'blob'; // convert type
     xhr.send();
-    data.image360 = url
-    data.thumbnail = url
+    
   })
 }
 
