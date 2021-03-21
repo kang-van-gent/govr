@@ -2,15 +2,13 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id')
 
-  //Get uer from local storage
-  let auth = JSON.parse(localStorage.getItem(DB.AUTH));
-  let user = JSON.parse(localStorage.getItem(DB.USER));
-
 //var img360 = imgRef.child(content.image360);
 
 var app = new Vue({
   el: '#app',
   data: {
+    auth: {},
+    user: {},
     content: {},
     date: '',
     cate: '',
@@ -28,7 +26,14 @@ var scene = new Vue({
   }
 })
 
-ContentById(id)
+init();
+async function init(){
+  //Get uer from local storage
+  app.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+  app.user = await JSON.parse(localStorage.getItem(DB.USER));
+
+  ContentById(id)
+}
 
 function intialApp(img360) {
   img360

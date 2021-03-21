@@ -2,8 +2,6 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id')
 
-let user = JSON.parse(localStorage.getItem(DB.AUTH));
-console.log(user);
 
 let data = {
     title: "",
@@ -18,7 +16,8 @@ var app = new Vue({
         category: '',
         content: {},
         categories: [],
-        cat: ''
+        cat: '',
+        auth: {}
     },
     methods: {
         toHome: function () {
@@ -37,15 +36,18 @@ var app = new Vue({
         },
     },
 });
-ContentById(id)
+
+init()
+async function init() {
+    app.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+    ContentById(id)
+}
+
 initData();
 function initData() {
-    $.get(
-        "https://us-central1-govr-42c7d.cloudfunctions.net/api/categories/all",
-        function (data) {
-            app.categories = data
-        }
-    );
+    apis.allCategories().then(data => {
+        app.categories = data
+    })    
 }
 
 

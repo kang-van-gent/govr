@@ -22,20 +22,19 @@
   });
 })(jQuery);
 
-
-//Get uer from local storage
-let auth = JSON.parse(localStorage.getItem(DB.AUTH));
-let user = JSON.parse(localStorage.getItem(DB.USER));
-
 var app = new Vue({
   el: "#app",
   data: {
-    contents: [],
-    privatecontents: [],
+    contents: {
+      publishedC: [],
+      privateC: [],
+      disabledC: [],
+      linkC: [],
+    },
     categories: [],
     name: "Hi from data",
-    auth: auth,
-    user: user,
+    auth: {},
+    user: {},
     contentCat: [],
     cont: '',
     deleteC: {
@@ -114,21 +113,6 @@ var app = new Vue({
       }
       return str
     },
-    logout: () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          localStorage.removeItem(DB.USER);
-          localStorage.removeItem(DB.AUTH);
-          localStorage.removeItem(DB.USERINFO);
-
-          window.location.href = PAGES.INDEX;
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    },
     getCat: (cat) => {
       localStorage.setItem(DB.CATEGORY, cat);
       window.location.href = PAGES.CATEGORY;
@@ -136,9 +120,16 @@ var app = new Vue({
   },
 });
 
-initData();
+init();
+async function init() {
+  //Get uer from local storage
+  app.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+  app.user = await JSON.parse(localStorage.getItem(DB.USER));
 
-async function initData() {
+  initData();
+}
+
+function initData() {
   app.isLoading = true;
 
   apis.allCategories().then(data => {
@@ -148,8 +139,9 @@ async function initData() {
     app.error = error
   });
 
-  apis.getContentsNewest().then(data => {
-    app.contents = data;
+  apis.getContentsByUid(app.auth.uid).then(data => {
+    console.log(data)
+    specifyContent(data)
     app.isLoading = false;
     app.isError = false;
   }).catch(error => {
@@ -157,23 +149,6 @@ async function initData() {
     app.isError = true;
     app.error = error
   });
-
-
-  await contentsRef.where('private','==',true).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      app.privatecontents = doc.data();
-      app.isLoading = false;
-      app.isError = false;
-    });
-  }).catch(err => {
-    app.isLoading = false;
-    app.isError = true;
-    app.error = err
-  });
-
-
-
-
 }
 
 function copyToClipboard(str) {
@@ -183,21 +158,20 @@ function copyToClipboard(str) {
   return result
 }
 
-
-const edit = document.getElementById("editModal")
-const editbtn = document.getElementById("edit-profile")
-const span = document.getElementsByClassName("close")[0];
-
-editbtn.onclick = function () {
-  edit.style.display = "block";
-};
-
-span.onclick = function () {
-  edit.style.display = "none";
-};
-
-window.onclick = function (event) {
-  if (event.target == edit) {
-    edit.style.display = "none";
+function specifyContent(contents) {
+  for (let i = 0; i < contents.length; i++) {
+    if (!contents[i].disbaled) {
+      if (!contents[i].published & !contents[i].private) { //only with link
+        //onl with link
+        app.contents.linkC.push(contents[i])
+      } else if (contents[i].published) { //published
+        app.contents.publishedC.push(contents[i])
+      } else if (contents[i].private) { //private
+        app.contents.privateC.push(contents[i])
+      }
+    } else { //disbaled
+      app.contents.disabledC.push(contents[i])
+    }
   }
-};
+  console.log(app.contents)
+}

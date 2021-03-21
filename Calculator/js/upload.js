@@ -1,34 +1,30 @@
-let user = JSON.parse(localStorage.getItem(DB.USER));
-
-let data = {
-  uid: "",
-  image360: "",
-  location: [],
-  title: "",
-  description: "",
-  category: "",
-  date: new Date(),
-  private: false,
-  published: false,
-  disabled: false,
-  thumbnail: "",
-};
-
-let files = {
-  name: "",
-  i360: "",
-  iThumbnail: "",
-};
-
 var app = new Vue({
   el: "#app",
   data: {
-    title: "",
-    description: "",
-    category: "",
+    auth: {},
+    user: {},
     categories: [],
-    image360: "",
-    loc: '',
+    files: {
+      name: "",
+      i360: "",
+      iThumbnail: "",
+    },
+    content: {
+      uid: "",
+      image360: "",
+      location: [],
+      title: "",
+      description: "",
+      category: "",
+      date: new Date(),
+      private: false,
+      published: false,
+      disabled: false,
+      thumbnail: "",
+    },
+    isLoading: false,
+    isError: false,
+    error: null
   },
   methods: {
     toHome: function () {
@@ -36,58 +32,109 @@ var app = new Vue({
     },
     setContent: async (title, des, cat) => {
       try {
-        data.uid = user.uid;
-        data.title = title;
-        data.description = des;
-        data.category = cat;
+        this.content.uid = user.uid;
+        this.content.title = title;
+        this.content.description = des;
+        this.content.category = cat;
         let i = Dropzone.forElement("#demo-upload");
         var message = i.files[0].dataURL;
-        let name = fileName(data.uid);
-        files.name = name;
-        files.i360 = message;
+        let name = generateFileName(this.content.uid);
+        this.files.name = name;
+        this.files.i360 = message;
       } catch (err) {
         console.log(err.message);
       }
     },
-    setLocation: async (loc) => {
-      data.location = [loc.latitude,loc.longitude];
-    },
-    setThumbnail: async (privacy) => {
-      let i = Dropzone.forElement("#upload");
-      var message = i.files[0].dataURL;
-      files.iThumbnail = message;
-      data[privacy] = true;
-      console.log(files);
-      uploadContent();
-    },
-    getLocation: function () {
-      if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(this.showPosition);
-      } else { 
-        this.loc ="Geolocation is not supported by this browser."
+    setLocation: async (location) => {
+      if (!navigator.geolocation) {
+        this.isError = true
+        this.error = "Geolocation is not supported by your browser"
+      } else {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.isError = false
+          this.content.location = {
+            _latitude: position.coords.latitude,
+            _longitude: position.coords.longitude
+          }
+        }, () => {
+          this.isError = true
+          this.error = "Unable to retrieve your location"
+        });
       }
     },
-    showPosition:function showPosition(position) {
-      this.loc = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      }      
+    setThumbnail: function () {
+      let i = Dropzone.forElement("#upload");
+      var message = i.files[0].dataURL;
+      this.files.iThumbnail = message;
+      this.content.privacy = true;
+      this.uploadContent();
+    },
+    uploadContent: async function () {
+      let ref = imgRef.child(files.name);
+      let thRef = thumpRef.child(files.name);
+
+      let pg = document.getElementById("progress");
+      pg.setAttribute("style", "width:0%");
+      console.log("uploading ...");
+
+      await urlToBlob(files.i360).then(async (blob) => {
+        await ref.put(blob).then(async function (snapshot) {
+          await snapshot.ref.getDownloadURL().then((url) => {
+            pg.setAttribute("style", "width:30%");
+            data.content.image360 = url;
+          });
+        });
+      });
+
+      await urlToBlob(files.iThumbnail).then(async (blob) => {
+        await thRef.put(blob).then(async function (snapshot) {
+          await snapshot.ref.getDownloadURL().then((url) => {
+            pg.setAttribute("style", "width: 60%");
+            data.content.thumbnail = url;
+          });
+        });
+      });
+
+      await apis.createContent(this.content).then(() => {
+
+        setTimeout(() => {
+          window.location.href = PAGES.MYPROFILE;
+        }, 1000);
+      }).catch(error => {
+
+      });
     }
   },
 });
 
-initData();
-function initData() {
-  $.get(
-    "https://us-central1-govr-42c7d.cloudfunctions.net/api/categories/all",
-    function (data) {
-      app.categories = data;
-    }
-  );
-}
-console.log(user);
+init();
+async function init() { //initialization
+  app.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+  app.user = await JSON.parse(localStorage.getItem(DB.USER));
 
-function fileName(uid) {
+  if (app.auth != null) { //IF IS LOGGED IN
+    initData();
+  } else {
+    window.location.href = PAGES.INDEX
+  }
+}
+
+function initData() {
+  app.isLoading = true;
+  app.isError = false;
+
+  apis.allCategories().then(data => {
+    app.isLoading = false;
+    app.isError = false;
+    app.categories = data;
+  }).catch(error => {
+    app.isLoading = false;
+    app.isError = true;
+    app.error = error;
+  });
+}
+
+function generateFileName(uid) {
   let date = new Date();
   let name =
     uid +
@@ -105,47 +152,6 @@ function fileName(uid) {
     date.getSeconds() +
     ".jpg";
   return name;
-}
-
-
-async function uploadContent() {
-  let ref = imgRef.child(files.name);
-  let thRef = thumpRef.child(files.name);
-
-  let pg = document.getElementById("progress");
-  pg.setAttribute("style", "width:0%");
-  console.log("uploading ...");
-
-  await urlToBlob(files.i360).then(async (blob) => {
-    await ref.put(blob).then(async function (snapshot) {
-      await snapshot.ref.getDownloadURL().then((url) => {
-        pg.setAttribute("style", "width:30%");
-        data.image360 = url;
-      });
-    });
-  });
-
-  await urlToBlob(files.iThumbnail).then(async (blob) => {
-    await thRef.put(blob).then(async function (snapshot) {
-      await snapshot.ref.getDownloadURL().then((url) => {
-        pg.setAttribute("style", "width: 60%");
-        data.thumbnail = url;
-      });
-    });
-  });
-
-  await contentsRef
-    .doc()
-    .set(data)
-    .then(() => {
-      setTimeout(() => {
-        pg.setAttribute("style", "width: 100%");
-      }, 1000)
-      setTimeout(() => {
-        window.location.href = PAGES.INDEX
-      },1500);
-  })
-
 }
 
 function urlToBlob(url) {
