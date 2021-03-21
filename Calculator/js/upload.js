@@ -28,7 +28,7 @@ var app = new Vue({
     category: "",
     categories: [],
     image360: "",
-    loc: "",
+    loc: '',
   },
   methods: {
     toHome: function () {
@@ -49,8 +49,8 @@ var app = new Vue({
         console.log(err.message);
       }
     },
-    setLocation: async (location) => {
-      data.location = [(lat = location), (lng = location)];
+    setLocation: async (loc) => {
+      data.location = [loc.latitude,loc.longitude];
     },
     setThumbnail: async (privacy) => {
       let i = Dropzone.forElement("#upload");
@@ -60,6 +60,19 @@ var app = new Vue({
       console.log(files);
       uploadContent();
     },
+    getLocation: function () {
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+      } else { 
+        this.loc ="Geolocation is not supported by this browser."
+      }
+    },
+    showPosition:function showPosition(position) {
+      this.loc = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }      
+    }
   },
 });
 
@@ -131,7 +144,7 @@ async function uploadContent() {
       setTimeout(() => {
         window.location.href = PAGES.INDEX
       },1500);
-    })
+  })
 
 }
 

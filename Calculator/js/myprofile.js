@@ -31,6 +31,7 @@ var app = new Vue({
   el: "#app",
   data: {
     contents: [],
+    privatecontents: [],
     categories: [],
     name: "Hi from data",
     auth: auth,
@@ -85,14 +86,14 @@ var app = new Vue({
       this.deleteC = content
       $('#deleteModal').modal()
     },
-    deleteNow: function(){
+    deleteNow: function () {
       this.deleteC.isLoading = true
       this.deleteC.isError = false
       apis.deleteContent(this.deleteC.id).then(() => {
         this.deleteC.isLoading = false
         this.deleteC.isError = false
         this.contents.forEach((item, index) => {
-          if(item.id === this.deleteC.id){
+          if (item.id === this.deleteC.id) {
             this.contents.splice(index, 1)
           }
         })
@@ -102,13 +103,13 @@ var app = new Vue({
         this.deleteC.error = error
       })
     },
-    displayPrivacy: function(info){
+    displayPrivacy: function (info) {
       let str = ''
-      if(info.published){
+      if (info.published) {
         str = 'Public'
-      }else if(!info.published && !info.private){
+      } else if (!info.published && !info.private) {
         str = 'Only people with link'
-      }else{
+      } else {
         str = 'Private'
       }
       return str
@@ -137,7 +138,7 @@ var app = new Vue({
 
 initData();
 
-function initData() {
+async function initData() {
   app.isLoading = true;
 
   apis.allCategories().then(data => {
@@ -156,11 +157,47 @@ function initData() {
     app.isError = true;
     app.error = error
   });
+
+
+  await contentsRef.where('private','==',true).get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      app.privatecontents = doc.data();
+      app.isLoading = false;
+      app.isError = false;
+    });
+  }).catch(err => {
+    app.isLoading = false;
+    app.isError = true;
+    app.error = err
+  });
+
+
+
+
 }
 
-function copyToClipboard(str){
+function copyToClipboard(str) {
   var input = document.getElementById('link-url');
   input.select();
   var result = document.execCommand('copy');
   return result
 }
+
+
+const edit = document.getElementById("editModal")
+const editbtn = document.getElementById("edit-profile")
+const span = document.getElementsByClassName("close")[0];
+
+editbtn.onclick = function () {
+  edit.style.display = "block";
+};
+
+span.onclick = function () {
+  edit.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == edit) {
+    edit.style.display = "none";
+  }
+};
