@@ -3,11 +3,11 @@ const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id')
 
 
-let data = {
-    title: "",
-    description: "",
-    category: "",
-  };
+// let data = {
+//     title: "",
+//     description: "",
+//     category: "",
+//   };
 var app = new Vue({
     el: "#app",
     data: {
@@ -17,7 +17,8 @@ var app = new Vue({
         content: {},
         categories: [],
         cat: '',
-        auth: {}
+        auth: {},
+        published: false
     },
     methods: {
         toHome: function () {
@@ -25,10 +26,10 @@ var app = new Vue({
         },
         setContent: async (title, des, cat) => {
             try {
-                data.title = title;
-                data.description = des;
-                data.category = cat;
-                data.published = true;
+                this.data.title = title;
+                this.data.description = des;
+                this.data.category = cat;
+                this.data.published = true;
                 uploadContent()
             } catch (err) {
                 console.log(err.message);
@@ -58,17 +59,24 @@ async function uploadContent() {
     pg.setAttribute("style", "width:0%");
     console.log("uploading ...");
     try {
-        await contentsRef.doc(id)
-        .update(data)
-            .then(() => {
-                setTimeout(() => {
-                    pg.setAttribute("style", "width: 100%");
-                }, 1000)
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
-            })
+        // await contentsRef.doc(id)
+        // .update(data)
+        //     .then(() => {
+        //         setTimeout(() => {
+        //             pg.setAttribute("style", "width: 100%");
+        //         }, 1000)
+        //         setTimeout(() => {
+        //             window.location.reload();
+        //         }, 2000);
+        //     })
             
+        apis.updateContent(app.data.content).then(con =>{
+            app.data.content = con
+            console.log(con)
+            setTimeout(() => {
+                pg.setAttribute("style", "width: 100%");
+            }, 1000)
+        })
         console.log('success')
     } catch (e) {
         console.log(data)
@@ -97,8 +105,8 @@ function ContentById(id) {
 
 var modal = document.getElementById("myModal3");
 var btn = document.getElementById("myBtn");
-btn.onclick = function () {
-    modal.style.display = "block";
-};
+// btn.onclick = function () {
+//     modal.style.display = "block";
+// };
 
 

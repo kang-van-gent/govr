@@ -55,14 +55,13 @@
         <div class="detail">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input v-model="title" type="text" class="form-control" id="title" name="title" :placeholder=content.title>
+                <input v-model="content.title" type="text" class="form-control" id="title" name="title" >
             </div>
             <div class="mb-3">
-                <textarea v-model="description" class="form-control" id="description" name="description" rows="6"
-                    :placeholder=content.description></textarea>
+                <textarea v-model="content.description" class="form-control" id="description" name="description" rows="6"></textarea>
             </div>
             <div class="mb-3">
-                <input v-model="category" class="form-control" list="datalistOptions" id="category" name="category"
+                <input v-model="content.category" class="form-control" list="datalistOptions" id="category" name="category"
                     :placeholder="cat">
                 <datalist id="datalistOptions">
                     <option v-for="category in categories" :value=category.label>
