@@ -12,6 +12,8 @@
     <script src="vendor/jquery.min.js"></script>
     <link rel="stylesheet" href="css/upload.css">
     <link rel="stylesheet" href="css/main.css">
+  <link href="./assets/favicon.svg" rel="icon" />
+
 </head>
 
 <body>
@@ -46,7 +48,7 @@
         <div class="img">
             <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
                 <div class="dz-message needsclick">
-                    <button type="button" class="dz-button">Drop files or click to upload.</button>
+                    <button type="button" class="dz-button">Drop files or click to upload.<br> only allow .jpg</button>
                 </div>
             </form>
         </div>
@@ -67,7 +69,7 @@
                 </datalist>
             </div>
             <div class="text-right">
-                <button v-on:click="toHome" type="button" class="btn btn-outline-primary">Cancle</button>
+                <button v-on:click="back" type="button" class="btn btn-outline-primary">Cancle</button>
                 <button v-on:click="setContent(title,description,category)" id="myBtn" type="button"class="btn btn-primary">
                     <span class="mr-1">Create</span>
                     <i class="fas fa-plus"></i>
@@ -97,8 +99,6 @@
     
                 <!-- Map -->
                 <div id="googleMap" style="width:100%;height:400px; background: #888;"></div>
-                Latitude: {{ content.place.location.lat }}<br>
-                Longitude: {{ content.place.location.lng }}
                 <!-- Map -->
     
                 <div class="control-container">

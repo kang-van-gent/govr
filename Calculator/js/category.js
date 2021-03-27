@@ -1,3 +1,7 @@
+// Able to change language
+// Manage UI page category header
+// loading modals
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const label = urlParams.get('label');

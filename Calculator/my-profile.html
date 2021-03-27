@@ -386,12 +386,7 @@
                   
                   <div class="row">
                     <h4>Only people with link</h4>
-                    <div class="col-xl-3 col-lg-4 col-md-6 p-1">
-                      <div class="card" style="align-self: center;  height: 250px;">
-                        <button v-on:click="window.location.href = PAGES.UPLOAD" class="btn btn-cate"
-                          style="height: 100%;"> + Add</button>
-                      </div>
-                    </div>
+                    
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.linkC" >
                       <div class="card">
                         <div class="mn-img" :id="'dropdown-' + content.id" data-toggle="dropdown" aria-haspopup="true"
@@ -440,12 +435,7 @@
 
                   <div class="row">
                     <h4>Private</h4>
-                    <div class="col-xl-3 col-lg-4 col-md-6 p-1">
-                      <div class="card" style="align-self: center;  height: 250px;">
-                        <button v-on:click="window.location.href = PAGES.UPLOAD" class="btn btn-cate"
-                          style="height: 100%;"> + Add</button>
-                      </div>
-                    </div>
+                    
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.privateC" >
                       <div class="card">
                         <div class="mn-img" :id="'dropdown-' + content.id" data-toggle="dropdown" aria-haspopup="true"
@@ -494,12 +484,7 @@
 
                   <div class="row">
                     <h4>Waiting for re-subscription</h4>
-                    <div class="col-xl-3 col-lg-4 col-md-6 p-1">
-                      <div class="card" style="align-self: center;  height: 250px;">
-                        <button v-on:click="window.location.href = PAGES.UPLOAD" class="btn btn-cate"
-                          style="height: 100%;"> + Add</button>
-                      </div>
-                    </div>
+                    
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.disabledC" >
                       <div class="card">
                         <div class="mn-img" :id="'dropdown-' + content.id" data-toggle="dropdown" aria-haspopup="true"

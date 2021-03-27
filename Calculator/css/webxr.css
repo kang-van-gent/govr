@@ -84,3 +84,10 @@ h3{
 .detail textarea{
     width: 100%;
 }
+
+i{
+    margin: 0 30px;
+}
+i:hover{
+    cursor: pointer;
+}

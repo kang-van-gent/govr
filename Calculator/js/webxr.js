@@ -1,8 +1,13 @@
+// Work with share link
+// Able to change language
+// Moblie responsive toggle menu
+// Open map modal after click place title
+
+
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id')
-
-//var img360 = imgRef.child(content.image360);
 
 var app = new Vue({
   el: '#app',
@@ -15,7 +20,14 @@ var app = new Vue({
     user: null,
     isLoading: false,
     isError: false,
-    error: ""
+    error: "",
+    place: ''
+  },
+  methods: {
+    toEdit: () => {
+      window.location.href = PAGES.EDIT + `?id=${id}`
+    },
+
   }
 })
 
@@ -23,6 +35,13 @@ var scene = new Vue({
   el: '#scene',
   data: {
     content: {}
+  }
+})
+
+var tab = new Vue({
+  el: '#tab',
+  data: {
+    title: ''
   }
 })
 
@@ -72,6 +91,8 @@ function ContentById(id) {
     scene.content = data
     app.cate = data.cat.title
     app.date =new Date(data.date['_seconds']*1000)
+    app.place = data.place
+    tab.title = data.title
     var storage = firebase.storage();
     const img360 = storage.refFromURL(data.image360);   
     intialApp(img360)

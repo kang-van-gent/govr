@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>webxr</title>
+    <title id="tab">{{ title }}</title>
     <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/webxr.css" rel="stylesheet" />
+    <link href="./assets/favicon.svg" rel="icon" />
+
 </head>
 
 <body>
@@ -31,23 +33,34 @@
                     <img id="thumbnail" :src='content.thumbnail' alt="thumbnail">
                 </div>
                 <div class="detail">
-                    <input type="text" name="title" :value=content.title>
+                    <i class="fas fa-link"></i>
+                    <i @click="toEdit" class="far fa-edit"></i>
+
                 </div>
                 <div class="detail">
-                    <input type="text" name="Locations" placeholder="content.location">
+
+                    <h4> {{ content.title}} </h4>
+
                 </div>
                 <div class="detail">
-                    <label for="description">Description</label><br>
-                    <textarea name="description" id="description" rows="10":value=content.description></textarea>
+                    <h4> {{ place.title}} </h4>
                 </div>
                 <div class="detail">
-                    <input v-model='cate' type="text" name="category" disabled>
+                    <h4> Description : </h4>
+                    <h5> {{ content.title}} </h5>
+
                 </div>
                 <div class="detail">
-                    <input v-model="date" type="text" name="date" disabled>
+                    <h4> {{ cate}} </h4>
                 </div>
                 <div class="detail">
-                    <input type="text" name="link" value="contentLink" disabled>
+                    <h4> {{ date }} </h4>
+
+                </div>
+                <div class="detail">
+                   
+                    <h4> Link </h4>
+
                 </div>
             </div>
         </div>
@@ -66,12 +79,12 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
     <!--REQUIRED SCRIPTS//-->
-    
+
     <script src="vendor/fontawesome.js"></script>
     <script src="vendor/vue.js"></script>
     <script src="vendor/vue-router.js"></script>
     <script src="vendor/firebase-config.js"></script>
-	<script src="vendor/apis.js"></script>
+    <script src="vendor/apis.js"></script>
 
     <script src="js/webxr.js"></script>
 </body>

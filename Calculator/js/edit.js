@@ -1,3 +1,13 @@
+// Able to change language
+// Update problem
+// Moblie responsive
+// Able to update thumbnail
+// Display map
+// Able to change location
+// Check user is logged in
+
+
+
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id')
@@ -18,18 +28,19 @@ var app = new Vue({
         categories: [],
         cat: '',
         auth: {},
-        published: false
+        place: {}
+
     },
     methods: {
-        toHome: function () {
-            window.location.href = PAGES.INDEX;
+        back: function () {
+            window.location.href = PAGES.MYPROFILE;
         },
         setContent: async (title, des, cat) => {
             try {
-                this.data.title = title;
-                this.data.description = des;
-                this.data.category = cat;
-                this.data.published = true;
+                this.title = title;
+                this.description = des;
+                this.category = cat;
+
                 uploadContent()
             } catch (err) {
                 console.log(err.message);
@@ -37,6 +48,13 @@ var app = new Vue({
         },
     },
 });
+
+var tab = new Vue({
+    el : '#tab',
+    data: {
+        title : ''
+    }
+})
 
 init()
 async function init() {
@@ -93,6 +111,7 @@ function ContentById(id) {
         console.log(con)
         app.content = con
         app.cat = con.category
+        tab.title = con.title
 
     }).catch(error => {
         this.isLoading = false
