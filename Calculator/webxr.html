@@ -29,11 +29,21 @@
                 </div>
             </div>
             <div id="app" class="info col-xl-3 col-lg-4 col-md-12">
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p>Your link for '{{ content.title }}' is : <a :href='link'> {{link}} </a> </p>
+                    </div>
+
+                </div>
                 <div class="tn">
                     <img id="thumbnail" :src='content.thumbnail' alt="thumbnail">
                 </div>
                 <div class="detail">
-                    <i class="fas fa-link"></i>
+                    <i @click="getSharedLink" class="fas fa-link"></i>
                     <i @click="toEdit" class="far fa-edit"></i>
 
                 </div>
@@ -58,7 +68,7 @@
 
                 </div>
                 <div class="detail">
-                   
+
                     <h4> Link </h4>
 
                 </div>

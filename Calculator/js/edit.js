@@ -28,7 +28,8 @@ var app = new Vue({
         categories: [],
         cat: '',
         auth: {},
-        place: {}
+        place: {},
+        query: ''
 
     },
     methods: {
@@ -47,6 +48,7 @@ var app = new Vue({
             }
         },
     },
+
 });
 
 var tab = new Vue({
@@ -55,6 +57,53 @@ var tab = new Vue({
         title : ''
     }
 })
+
+function initMap() {
+    infowindow = new google.maps.InfoWindow();
+
+    const example = {
+        title: 'Dhurakij Pundit University',
+        location: { lat: 13.8707137, lng: 100.5484985 }
+    };
+    map = new google.maps.Map(
+        document.getElementById('googleMap'), 
+        { center: example.location, zoom: 15 }
+    );
+    createMarker(example);
+}
+
+function searchPlace(query){
+    service = new google.maps.places.PlacesService(map)
+
+    const request = {
+        query: query,
+        fields: ['name', 'geometry'],
+    };
+
+    service.findPlaceFromQuery(request, function (results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                const place = {
+                    title: results[i].name,
+                    location: results[i].geometry.location
+                }
+                console.log(place)
+                createMarker(place);
+            }
+            map.setCenter(results[0].geometry.location);
+        }
+    });
+}
+
+function createMarker(place){
+    app.query = place.title;
+    app.content.place = place
+    const marker = new google.maps.Marker({
+        position: place.location,
+        title: place.title,
+        map: map,
+    });
+}
 
 init()
 async function init() {
@@ -112,6 +161,7 @@ function ContentById(id) {
         app.content = con
         app.cat = con.category
         tab.title = con.title
+        app.place = con.place
 
     }).catch(error => {
         this.isLoading = false

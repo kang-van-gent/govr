@@ -68,6 +68,11 @@
                 <datalist id="datalistOptions">
                     <option v-for="category in categories" :value=category.label>
                 </datalist>
+
+            </div>
+            <div class="mb-3">
+                <label for="loaction" class="form-label">Location</label>
+                <input v-model="place.title" type="text" class="form-control" id="location" name="location" disabled>
             <button type="button" class="btn btn-primary btn-lg btn-block"><i class="fas fa-map-marker-alt"></i> Change location </button>
 
             </div>
@@ -81,6 +86,44 @@
   
             </div>
 
+        </div>
+
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <nav class="navbar navbar-light bg-light">
+                    <div class="container-fluid">
+                        <div class="search d-flex">
+                            <input v-on:keyup.enter="searchPlace(query)" v-model="query" id="loc" name="loc" class="form-control me-2" type="search" style="height: 50px" placeholder="Search" aria-label="Search">
+                            <button v-on:click="searchPlace(query)" class="ml-2 btn btn-outline-success" style="height: 50px" type="button">
+                                <i class="fas fa-search"></i>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+    
+                <!-- Map -->
+                <div id="googleMap" style="width:100%;height:400px; background: #888;"></div>
+                <!-- Map -->
+    
+                <div class="control-container">
+                    <div class="row">
+                        <div class="col-3">
+                            <button type="button" id="back" class="back btn btn-outline-primary">Back</button>
+                        </div>
+                        <div class="col-4">
+                        </div>
+                        <div class="col-5">
+                            <button type="button" id="continue" class="continue btn btn-primary">
+                                <span class="mr-1">Continue</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="myModal3" class="modal3">
@@ -114,6 +157,10 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-storage.js"></script>
 <!--REQUIRED SCRIPTS//-->
+
+<!-- //GOOGLE MAP & PLACE APIs -->
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdJYPHvhaFuT1i2DyAlnuNOdSWHZCcaj4&libraries=places&callback=initMap" type="text/javascript"></script>
+<!-- GOOGLE MAP & PLACE APIs// -->
 
 <script src="vendor/firebase-config.js"></script>
 <script src="vendor/apis.js"></script>
