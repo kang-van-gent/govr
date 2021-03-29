@@ -9,6 +9,11 @@ var app = new Vue({
   el: "#app",
   data: {
     lang: { name: "", code: "" },
+    update:{
+      title: "",
+    description: "",
+    category: ""
+    },
     title: "",
     description: "",
     category: "",
@@ -49,10 +54,6 @@ var app = new Vue({
     },
     setContent: async (title, des, cat) => {
       try {
-        this.title = title;
-        this.description = des;
-        this.category = cat;
-
         uploadContent();
       } catch (err) {
         console.log(err.message);
@@ -122,10 +123,12 @@ async function uploadContent() {
   try {
     apis.updateContent(app.content).then((con) => {
       app.content = con;
-      console.log(con);
       setTimeout(() => {
         pg.setAttribute("style", "width: 100%");
       }, 1000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     });
 
   } catch (e) {

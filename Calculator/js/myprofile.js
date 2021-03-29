@@ -137,11 +137,12 @@ var app = new Vue({
         .then(() => {
           this.deleteC.isLoading = false;
           this.deleteC.isError = false;
-          this.contents.forEach((item, index) => {
-            if (item.id === this.deleteC.id) {
-              this.contents.splice(index, 1);
-            }
-          });
+          // this.contents.forEach((item, index) => {
+          //   if (item.id === this.deleteC.id) {
+          //     this.contents.splice(index, 1);
+          //   }
+          // });
+          window.location.reload()
         })
         .catch((error) => {
           this.deleteC.isLoading = false;
