@@ -22,7 +22,7 @@
             <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="visually-hidden"></span>
             </div>
-            <span class="text-primary">Loading...</span>
+            <span class="text-primary">{{lang.LOADING}}</span>
         </div>
 
         <div class="alert alert-danger alert-dismissible fade show" v-if="isError" role="alert">
@@ -33,24 +33,30 @@
         <div class="nav-bar">
             <div class="container">
                 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-                    <a href="#" class="navbar-brand">MENU</a>
+                    <a href="#" class="navbar-brand">{{lang.MENU}}</a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="index.html" class="nav-item nav-link">{{lang.HOME}}</a>
 
-                            <a href="my-profile.html" class="nav-item nav-link">My Profile</a>
+                            <a href="my-profile.html" class="nav-item nav-link">{{lang.MY_PROFILE}}</a>
                         </div>
-                        <!-- <div class="social ml-auto">
-						<a href=""><i class="fab fa-twitter"></i></a>
+                        <div class="ml-auto">
+                            <i class="fas fa-language text-light"></i>
+                            <select id="langOption" class="form-control form-select" v-model="lang.code"
+                                v-on:change="selectLang">
+                                <option value="en">English</option>
+                                <option value="th">ไทย</option>
+                            </select>
+                            <!-- <a href=""><i class="fab fa-twitter"></i></a>
 						<a href=""><i class="fab fa-facebook-f"></i></a>
 						<a href=""><i class="fab fa-linkedin-in"></i></a>
 						<a href=""><i class="fab fa-instagram"></i></a>
-						<a href=""><i class="fab fa-youtube"></i></a>
-					</div> -->
+						<a href=""><i class="fab fa-youtube"></i></a> -->
+                        </div>
                     </div>
                 </nav>
             </div>
@@ -63,8 +69,7 @@
                     <div class="img">
                         <form action="/upload" class="dropzone needsclick dz-clickable" id="demo-upload">
                             <div class="dz-message needsclick">
-                                <button type="button" class="dz-button">Drop files or click to upload.<br> only allow
-                                    .jpg</button>
+                                <button type="button" class="dz-button">{{ lang.DROP_FILE_OR_CLICK_TO_UPLOAD }}<br> {{lang.ONLY_ALLOW_JPG}}</button>
                             </div>
                         </form>
                     </div>
@@ -72,26 +77,26 @@
                 <div class=" col-lg-6">
                     <div class="detail">
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input v-model="title" type="text" class="form-control" id="title" name="title"
+                            <label for="title" class="form-label">{{lang.TITLE}}</label>
+                            <input v-model="lang.UNTITLED" type="text" class="form-control" id="title" name="title"
                                 placeholder="Untitled">
                         </div>
                         <div class="mb-3">
-                            <textarea v-model="description" class="form-control " id="description" name="description"
+                            <textarea v-model="lang.DESCRIPTION" class="form-control " id="description" name="description"
                                 rows="6" placeholder="Description"></textarea>
                         </div>
                         <div class="mb-3">
-                            <input v-model="category" class="form-control" list="datalistOptions" id="category"
+                            <input v-model="lang.CATEGORY" class="form-control" list="datalistOptions" id="category"
                                 name="category" placeholder="Category">
                             <datalist id="datalistOptions">
                                 <option v-for="category in categories" :value=category.label>
                             </datalist>
                         </div>
                         <div class="text-right">
-                            <button v-on:click="back" type="button" class="btn btn-outline-primary">Cancle</button>
+                            <button v-on:click="back" type="button" class="btn btn-outline-primary">{{lang.CANCEL}}</button>
                             <button v-on:click="setContent(title,description,category)" id="myBtn" type="button"
                                 class="btn btn-primary">
-                                <span class="mr-1">Create</span>
+                                <span class="mr-1">{{lang.CREATE}}</span>
                                 <i class="fas fa-plus"></i>
                             </button>
                             <!-- v-on:click="create(title, description, category)" -->
@@ -119,7 +124,7 @@
                             <button v-on:click="searchPlace(query)" class="ml-2 btn btn-outline-success"
                                 style="height: 50px" type="button">
                                 <i class="fas fa-search"></i>
-                                Search
+                                {{lang.SEARCH}}
                             </button>
                         </div>
                     </div>
@@ -132,13 +137,13 @@
                 <div class="control-container">
                     <div class="row">
                         <div class="col-3">
-                            <button type="button" id="back" class="back btn btn-outline-primary">Back</button>
+                            <button type="button" id="back" class="back btn btn-outline-primary">{{lang.BACK}}</button>
                         </div>
                         <div class="col-4">
                         </div>
                         <div class="col-5">
                             <button type="button" id="continue" class="continue btn btn-primary">
-                                <span class="mr-1">Continue</span>
+                                <span class="mr-1">{{lang.CONTINUE}}</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -157,50 +162,50 @@
                             <span class="close2">&times;</span>
                             <div class="navbar navbar-light bg-light">
                                 <div class="container-fluid" style="justify-content: center; margin-bottom: 15px;">
-                                    <a>Plese select your thumbnail</a>
+                                    <a>{{lang.PLEASE_SELECT_YOUR_THUMBNAIL}}</a>
                                 </div>
                             </div>
                         </div>
-                      </div>
-                      <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="tbn">
-                                    <form action="/upload" class="dropzone needsclick dz-clickable" id="upload">
-                                        <div class="dz-message needsclick">
-                                            <button type="button" class="dz-button">Drop files or click to upload.</button>
-                                        </div>
-                                    </form>
-                                </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="tbn">
+                                <form action="/upload" class="dropzone needsclick dz-clickable" id="upload">
+                                    <div class="dz-message needsclick">
+                                        <button type="button" class="dz-button">{{lang.DROP_FILE_OR_CLICK_TO_UPLOAD}} <br> {{lang.ONLY_ALLOW_JPG}}</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label for="inputState">Select content privacy</label>
-                                    <select v-model="privacy" class="privacy form-control" id="privacy">
-                                        <option value="public">Public</option>
-                                        <option value="only-link">Only people with link</option>
-                                        <option value="private">Private</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="inputState">{{lang.SELECT_CONTENT_PRIVACY}}</label>
+                                <select v-model="privacy" class="privacy form-control" id="privacy">
+                                    <option value="public">{{lang.PUBLIC}}</option>
+                                    <option value="only-link">{{lang.ONLY_PEOPLE_WITH_LINK}}</option>
+                                    <option value="private">{{lang.PRIVATE}}</option>
+                                </select>
                             </div>
-                      </div>
-                      <div class="row">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class=" col">
                             <div class="control-container">
                                 <div class="row">
                                     <div class="col">
                                         <button type="button" id="back"
-                                            class="back2 btn btn-outline-primary">Back</button>
+                                            class="back2 btn btn-outline-primary">{{lang.BACK}}</button>
                                     </div>
 
                                     <div class="col">
                                         <button v-if="privacy !== 'private'" @click="setThumbnail(privacy)"
                                             type="button" id="continue" class="continue2 btn btn-primary">
-                                            <span class="mr-1">Save & Share</span>
+                                            <span class="mr-1">{{lang.SAVE_AND_SHARE}}</span>
                                             <i class="fas fa-share-alt"></i>
                                         </button>
                                         <button v-if="privacy === 'private'" @click="setThumbnail(privacy)"
                                             type="button" id="continue" class="continue2 btn btn-primary">
-                                            <span>Save</span>
+                                            <span>{{lang.SAVE}}</span>
                                         </button>
                                     </div>
 
@@ -208,8 +213,8 @@
                             </div>
                         </div>
 
-                      </div>
-                
+                    </div>
+
                 </div>
 
 
@@ -234,7 +239,7 @@
             <!-- Modal content -->
             <div class="modal-content4">
                 <span class="close">&times;</span>
-                <p>Your link for '{{ content.title }}' is : <a :href='link'> {{ link.url }} </a></p>
+                <p>{{lang.YOUR_LONK_FOR}} '{{ content.title }}' {{lang.IS}} <a :href='link'> {{ link.url }} </a></p>
             </div>
 
         </div>
@@ -268,6 +273,8 @@
 
 <script src="vendor/firebase-config.js"></script>
 <script src="vendor/apis.js"></script>
+<script src="vendor/langs.js"></script>
+
 
 <script src="js/upload.js"></script>
 

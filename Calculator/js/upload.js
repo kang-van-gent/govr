@@ -21,6 +21,7 @@ let files = {
 var app = new Vue({
   el: "#app",
   data: {
+    lang: { name: "", code: "" },
     categories: [],
     query: "",
     privacy: "",
@@ -48,7 +49,12 @@ var app = new Vue({
     isError: false
   },
   created: function () {
+    langs.getSelected()
+      .then(lang => {
+        this.lang = lang;
+      });
     this.isLoading = true
+
     apis
       .allCategories()
       .then((data) => {
@@ -61,6 +67,13 @@ var app = new Vue({
       });
   },
   methods: {
+    selectLang: function () {
+      langs.selectLanguage(this.lang.code);
+      langs.getSelected()
+        .then(lang => {
+          this.lang = lang;
+        });
+    },
     back: function () {
       window.location.href = PAGES.MYPROFILE;
     },
@@ -178,12 +191,14 @@ function fileName(uid) {
   return name;
 }
 let pg = document.getElementById("progress");
+
 async function uploadContent() {
   let ref = imgRef.child(files.name);
   let thRef = thumpRef.child(files.name);
 
   pg.setAttribute("style", "width:0%");
   console.log("uploading ...");
+
   await urlToBlob(files.i360).then(async (blob) => {
     await ref.put(blob).then(async function (snapshot) {
       await snapshot.ref.getDownloadURL().then((url) => {
@@ -192,6 +207,7 @@ async function uploadContent() {
       });
     });
   });
+
   await urlToBlob(files.iThumbnail).then(async (blob) => {
     await thRef.put(blob).then(async function (snapshot) {
       await snapshot.ref.getDownloadURL().then((url) => {
@@ -200,28 +216,7 @@ async function uploadContent() {
       });
     });
   });
-  //   await contentsRef
-  //     .doc()
-  //     .set(app.content)
-  //     .then(async (data) => {
-  //       await getLink();
-  //       setTimeout(() => {
-  //         pg.setAttribute("style", "width: 100%");
-  //         console.log(data);
-  //         //getLink(data);
-  //       }, 1000);
-  //       //   setTimeout(() => {
-  //       //     window.location.href = PAGES.INDEX;
-  //       //   }, 1500);
-  //       if (
-  //         (app.content.published == true) & (app.content.private == false) ||
-  //         (app.content.published == false) & (app.content.private == false)
-  //       ) {
-  //         getLink();
-  //       } else {
-  //         window.location.href = PAGES.INDEX;
-  //       }
-  //     });
+
   await apis.createContent(app.content).then((data) => {
     setTimeout(() => {
       pg.setAttribute("style", "width: 100%");
