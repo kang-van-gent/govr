@@ -78,15 +78,15 @@
                     <div class="detail">
                         <div class="mb-3">
                             <label for="title" class="form-label">{{lang.TITLE}}</label>
-                            <input v-model="lang.UNTITLED" type="text" class="form-control" id="title" name="title"
+                            <input v-model="title" type="text" class="form-control" id="title" name="title"
                                 placeholder="Untitled">
                         </div>
                         <div class="mb-3">
-                            <textarea v-model="lang.DESCRIPTION" class="form-control " id="description" name="description"
+                            <textarea v-model="description" class="form-control " id="description" name="description"
                                 rows="6" placeholder="Description"></textarea>
                         </div>
                         <div class="mb-3">
-                            <input v-model="lang.CATEGORY" class="form-control" list="datalistOptions" id="category"
+                            <input v-model="category" class="form-control" list="datalistOptions" id="category"
                                 name="category" placeholder="Category">
                             <datalist id="datalistOptions">
                                 <option v-for="category in categories" :value=category.label>
@@ -133,6 +133,7 @@
                 <!-- Map -->
                 <div id="googleMap" style="width:100%;height:500px; background: #888;"></div>
                 <!-- Map -->
+                {{content.place}}
 
                 <div class="control-container">
                     <div class="row">
