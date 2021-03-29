@@ -1,6 +1,4 @@
-// Work with share link
 // Able to change language
-// Moblie responsive toggle menu
 // Open map modal after click place title
 
 const queryString = window.location.search;
@@ -27,13 +25,12 @@ var app = new Vue({
       window.location.href = PAGES.EDIT + `?id=${id}`;
     },
     getSharedLink: function (content) {
-      const md = document.getElementById("myModal");
+      const md = document.getElementById("myLink");
       md.style.display = "block";
       apis
         .getLink(content.id)
         .then((data) => {
           this.link = data.url;
-          console.log(data);
         })
         .catch((error) => {
           this.link.isLoading = false;
@@ -43,6 +40,48 @@ var app = new Vue({
           md.style.display = "none";
         }
       };
+    },
+  },
+});
+
+var menu = new Vue({
+  el: "#m",
+  data: {
+    content: {},
+    place: {},
+    date: "",
+    cate: "",
+    user: {},
+    link:{}
+  },
+  methods: {
+    toEdit: () => {
+      window.location.href = PAGES.EDIT + `?id=${id}`;
+    },
+    getSharedLink: function (content) {
+      const md = document.getElementById("myLink");
+      md.style.display = "block";
+      apis
+        .getLink(content.id)
+        .then((data) => {
+          this.link = data.url;
+        })
+        .catch((error) => {
+          this.link.isLoading = false;
+        });
+      window.onclick = function (event) {
+        if (event.target == md) {
+          md.style.display = "none";
+        }
+      };
+    },
+    toggle: (condition) => {
+      const md = document.getElementById("myModal");
+      if (condition == 1) {      
+        md.style.display = "block";
+      } else {
+        md.style.display = "none";
+      }
     },
   },
 });
@@ -66,6 +105,7 @@ async function init() {
   //Get uer from local storage
   app.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
   app.user = await JSON.parse(localStorage.getItem(DB.USER));
+  menu.user = await JSON.parse(localStorage.getItem(DB.USER));
 
   ContentById(id);
 }
@@ -86,7 +126,6 @@ function intialApp(img360) {
       // Or inserted into an <img> element
       var img = document.getElementById("img360");
       img.setAttribute("src", url);
-      console.log("success");
     })
     .catch((error) => {
       // Handle any errors
@@ -105,9 +144,13 @@ function ContentById(id) {
       app.content = data;
       scene.content = data;
       app.cate = data.cat.title;
+      menu.cate = data.cat.title;
       app.date = new Date(data.date["_seconds"] * 1000);
+      menu.date = new Date(data.date["_seconds"] * 1000);
       app.place = data.place;
       tab.title = data.title;
+      menu.content = data;
+      menu.place = data.place;
       var storage = firebase.storage();
       const img360 = storage.refFromURL(data.image360);
       intialApp(img360);
@@ -118,3 +161,15 @@ function ContentById(id) {
       this.error = error;
     });
 }
+
+var modal = document.getElementById("myModal");
+var btn = document.getElementById('menu')
+btn.onclick= function () {
+  modal.style.display = "block";
+}
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+

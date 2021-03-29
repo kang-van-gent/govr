@@ -1,12 +1,6 @@
 // Able to change language
-// Update problem
-// Moblie responsive
 // Able to update thumbnail
-// Display map
 // Able to change location
-// Check user is logged in
-
-
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -29,7 +23,10 @@ var app = new Vue({
         cat: '',
         auth: {},
         place: {},
-        query: ''
+        query: '',
+        isLoading: false,
+        isError: false,
+        error: ""
 
     },
     methods: {
@@ -107,8 +104,14 @@ function createMarker(place){
 
 init()
 async function init() {
-    app.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+    app.isLoading = true
+    const auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+    app.auth = auth
     ContentById(id)
+    // if(auth == null){
+    //     window.location.href = PAGES.INDEX
+    // }
+
 }
 
 initData();
@@ -137,8 +140,8 @@ async function uploadContent() {
         //         }, 2000);
         //     })
             
-        apis.updateContent(app.data.content).then(con =>{
-            app.data.content = con
+        apis.updateContent(app.content).then(con =>{
+            app.content = con
             console.log(con)
             setTimeout(() => {
                 pg.setAttribute("style", "width: 100%");
@@ -155,18 +158,21 @@ async function uploadContent() {
 function ContentById(id) {
     this.isLoading = true
     apis.getContent(id).then(con => {
-        this.isLoading = false
-        this.isError = false
+        app.isLoading = false
+        app.isError = false
         console.log(con)
         app.content = con
         app.cat = con.category
         tab.title = con.title
         app.place = con.place
+        // if(app.auth.uid !== con.uid){
+        //     window.location.href = PAGES.MYPROFILE
+        // }
 
     }).catch(error => {
-        this.isLoading = false
-        this.isError = true
-        this.error = error
+        app.isLoading = false
+        app.isError = true
+        app.error = error
     });
 }
 

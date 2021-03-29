@@ -103,15 +103,14 @@ var apis = {
     },
     updateContent: function (content) {
         return new Promise((resolve, reject) => {
-            $.put(
-                `https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/update`,
-                content,
-                function (data) {
+            $.ajax({
+                method: "PUT",
+                url: `https://us-central1-govr-42c7d.cloudfunctions.net/api/contents/update`,
+                data: content
+              })
+                .done(function( data ) {
                     resolve(data)
-                }
-            ).fail(function(error){
-                reject(error)
-            })
+                });
         })
     },
     deleteContent: function (id) {

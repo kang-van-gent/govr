@@ -1,14 +1,16 @@
 // Able to change language
 // Moblie responsive
-// After upload pop up link (only public or only link)
 // Able to change location
 // limit thumbnail size
-// Check user is logged in
+
 
 let user = JSON.parse(localStorage.getItem(DB.USER));
 let map;
 let service;
 let infowindow;
+if(user == null) {
+  window.location.href = PAGES.INDEX
+}
 
 let files = {
   name: "",
@@ -42,12 +44,17 @@ var app = new Vue({
       thumbnail: "",
     },
     link: {},
+    isLoading: false,
+    isError: false
   },
   created: function () {
+    this.isLoading = true
     apis
       .allCategories()
       .then((data) => {
         app.categories = data;
+        this.isLoading = false
+
       })
       .catch((error) => {
         console.error(error);
