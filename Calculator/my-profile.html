@@ -214,8 +214,8 @@
                 </div>
                 <div class="col-9 text-left">
                   <a target="_blank"
-                    :href="`https://www.google.com/maps/@${info.location._latitude},${info.location._longitude}`">
-                    @{{info.location._latitude}},{{info.location._longitude}}
+                    :href="`https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`">
+                    @{{place.lat}},{{place.lng}}
                   </a>
                 </div>
               </div>

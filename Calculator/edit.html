@@ -100,7 +100,7 @@
                             <label for="loaction" class="form-label">{{lang.LOCATION}}</label>
                             <input v-model="place.title" type="text" class="form-control" id="location" name="location"
                                 disabled>
-                            <button type="button" class="btn btn-primary btn-lg btn-block"><i
+                            <button @click="openMap(1)" type="button" class="btn btn-primary btn-lg btn-block"><i
                                     class="fas fa-map-marker-alt"></i>
                                 {{lang.CHANGE_LOCATION}} </button>
 
@@ -143,12 +143,12 @@
                 <div class="control-container">
                     <div class="row">
                         <div class="col-3">
-                            <button type="button" id="back" class="back btn btn-outline-primary">{{lang.BACK}}</button>
+                            <button @click="openMap(2)" type="button" id="back" class="back btn btn-outline-primary">{{lang.BACK}}</button>
                         </div>
                         <div class="col-4">
                         </div>
                         <div class="col-5">
-                            <button type="button" id="continue" class="continue btn btn-primary">
+                            <button @click="updateLocation()" type="button" id="continue" class="continue btn btn-primary">
                                 <span class="mr-1">{{lang.CONTINUE}}</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
