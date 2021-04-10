@@ -54,6 +54,8 @@ var app = new Vue({
     isLoading: false,
     isError: false,
     error: "",
+    place: {}
+
   },
   created: async function () {
     langs.getSelected().then((lang) => {
@@ -120,8 +122,9 @@ var app = new Vue({
     },
     infoContent: function (content) {
       this.info = content;
+      this.place = content.place.location;
       this.info.author = this.user;
-      this.info.updated = new Date(this.info.date._seconds * 1000);
+       this.info.updated = this.info.date
       console.log(this.info);
       $("#infoModal").modal();
     },

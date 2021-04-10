@@ -8,7 +8,7 @@ let user = JSON.parse(localStorage.getItem(DB.USER));
 let map;
 let service;
 let infowindow;
-if(user == null) {
+if (user == null) {
   window.location.href = PAGES.INDEX
 }
 
@@ -141,6 +141,15 @@ function initMap() {
 function searchPlace(query) {
   service = new google.maps.places.PlacesService(map);
 
+  const example = {
+    title: "Dhurakij Pundit University",
+    location: { lat: 13.8707137, lng: 100.5484985 },
+  };
+  map = new google.maps.Map(document.getElementById("googleMap"), {
+    center: example.location,
+    zoom: 15,
+  });
+
   const request = {
     query: query,
     fields: ["name", "geometry"],
@@ -153,7 +162,7 @@ function searchPlace(query) {
           title: results[i].name,
           location: results[i].geometry.location,
         };
-        console.log(place);
+        console.log(JSON.stringify(place));
         createMarker(place);
       }
       map.setCenter(results[0].geometry.location);
@@ -218,21 +227,23 @@ async function uploadContent() {
   });
 
   await apis.createContent(app.content).then((data) => {
-    setTimeout(() => {
-      pg.setAttribute("style", "width: 100%");
-    }, 1300);
 
-    if (
-      (app.content.published == true) & (app.content.private == false) ||
-      (app.content.published == false) & (app.content.private == false)
-    ) {
-      const p = document.getElementById('myModal3')
-      p.style.display = 'none';
-      getLink(data);
-      console.log(data);
-    } else {
-      window.location.href = PAGES.MYPROFILE;
-    }
+    pg.setAttribute("style", "width: 100%");
+
+    setTimeout(() => {
+      if (
+        (app.content.published == true) & (app.content.private == false) ||
+        (app.content.published == false) & (app.content.private == false)
+      ) {
+        const p = document.getElementById('myModal3')
+        p.style.display = 'none';
+        getLink(data);
+        console.log(data);
+      } else {
+        window.location.href = PAGES.MYPROFILE;
+      }
+    }, 1000)
+
   });
 }
 
@@ -311,6 +322,6 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
   if (event.target == modal3) {
-    modal3.style.display = "none";
+    window.location.href = PAGES.MYPROFILE
   }
 };
