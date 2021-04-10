@@ -54,8 +54,7 @@ var app = new Vue({
     isLoading: false,
     isError: false,
     error: "",
-    place: {}
-
+    place: {},
   },
   created: async function () {
     langs.getSelected().then((lang) => {
@@ -90,6 +89,22 @@ var app = new Vue({
         this.isError = true;
         this.error = error;
       });
+    OmiseCard.configureButton("#checkout-button", {
+      publicKey: "OMISE_PUBLIC_KEY",
+      amount: 10000,
+      frameLabel: "Merchant Name",
+      submitLabel: "Pay",
+      defaultPaymentMethod: "internet_banking",
+    });
+    OmiseCard.configureButton("#checkout-button-alt", {
+      publicKey: "OMISE_PUBLIC_KEY",
+      amount: 10000,
+      frameLabel: "Merchant Name",
+      submitLabel: "Pay",
+
+    });
+
+    OmiseCard.attach();
   },
   methods: {
     selectLang: function () {
@@ -124,7 +139,7 @@ var app = new Vue({
       this.info = content;
       this.place = content.place.location;
       this.info.author = this.user;
-       this.info.updated = this.info.date
+      this.info.updated = this.info.date;
       console.log(this.info);
       $("#infoModal").modal();
     },
@@ -145,7 +160,7 @@ var app = new Vue({
           //     this.contents.splice(index, 1);
           //   }
           // });
-          window.location.reload()
+          window.location.reload();
         })
         .catch((error) => {
           this.deleteC.isLoading = false;
