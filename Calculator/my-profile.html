@@ -491,12 +491,15 @@
                   <div class="row">
                     <h4>{{lang.WAIT_FOR_RE_SUBSCRIPTION}}</h4>
 
-                    <form action="checkout.php" method="POST">
+                    <!-- </div><form action="checkout.php" method="POST">
                       <input type="submit" id="checkout-button" value="Pay with internet banking">
                     </form>
                     <form action="checkout.php" method="POST">
                       <input type="submit" id="checkout-button-alt" value="Pay with credit card">
-                    </form>
+                    </form> -->
+
+                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button" class="btn btn-primary btn-lg btn-block">Cart</a>
+                    <a :href="PAGES.CHECKOUT + `?id=${auth.uid}`" type="button" class="btn btn-primary btn-lg btn-block">Check out</a>
 
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.disabledC">
                       <div class="card">

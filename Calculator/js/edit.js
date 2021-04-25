@@ -1,6 +1,3 @@
-// Able to update thumbnail
-// Able to change location
-
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get("id");

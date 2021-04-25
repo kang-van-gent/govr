@@ -89,22 +89,7 @@ var app = new Vue({
         this.isError = true;
         this.error = error;
       });
-    OmiseCard.configureButton("#checkout-button", {
-      publicKey: "OMISE_PUBLIC_KEY",
-      amount: 10000,
-      frameLabel: "Merchant Name",
-      submitLabel: "Pay",
-      defaultPaymentMethod: "internet_banking",
-    });
-    OmiseCard.configureButton("#checkout-button-alt", {
-      publicKey: "OMISE_PUBLIC_KEY",
-      amount: 10000,
-      frameLabel: "Merchant Name",
-      submitLabel: "Pay",
 
-    });
-
-    OmiseCard.attach();
   },
   methods: {
     selectLang: function () {

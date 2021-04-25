@@ -13,7 +13,6 @@ var app = new Vue({
         langs.getSelected()
             .then(lang => {
                 this.lang = lang;
-                document.title = lang.CART
             });
 
         this.calPrice()
@@ -41,7 +40,6 @@ var app = new Vue({
             langs.getSelected()
                 .then(lang => {
                     this.lang = lang;
-                    document.title = lang.CART
                 });
         },
         editCart: function (num) {
