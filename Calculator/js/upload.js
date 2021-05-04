@@ -4,7 +4,7 @@
 // limit thumbnail size
 
 
-let user = JSON.parse(localStorage.getItem(DB.USER));
+let user = JSON.parse(localStorage.getItem(DB.AUTH));
 let map;
 let service;
 let infowindow;
@@ -250,15 +250,16 @@ async function uploadContent() {
 function getLink(content) {
   const md4 = document.getElementById("myModal4");
   md4.style.display = "block";
-  apis
-    .getLink(content.uid)
-    .then((data) => {
-      app.link = data;
-      console.log(data);
-    })
-    .catch((error) => {
-      this.link.isLoading = false;
-    });
+  app.link = "https://govr-42c7d.web.app/webxr.html?id=" + content.id
+  // apis
+  //   .getLink(content.uid)
+  //   .then((data) => {
+  //     app.link = data;
+  //     console.log(data);
+  //   })
+  //   .catch((error) => {
+  //     this.link.isLoading = false;
+  //   });
   window.onclick = function (event) {
     if (event.target == md4) {
       md4.style.display = "none";
