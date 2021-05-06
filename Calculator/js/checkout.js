@@ -10,11 +10,18 @@ var app = new Vue({
     error: "",
   },
   created: async function () {
-    let user = await apis.getUser(id);
-    let userInfo = (await userInfoRef.doc(id).get()).data();
-
-    await this.bill(user, userInfo);
-    window.location.href = PAGES.MYPROFILE
+    const auth = await JSON.parse(localStorage.getItem(DB.AUTH));
+    
+    if (auth == null) {
+      window.location.href = PAGES.INDEX
+    }else{
+      let user = await apis.getUser(id);
+      let userInfo = (await userInfoRef.doc(id).get()).data();
+  
+      await this.bill(user, userInfo);
+      window.location.href = PAGES.MYPROFILE
+    }
+    
   },
   methods: {
     bill: async (user, userInfo) => {

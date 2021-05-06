@@ -33,9 +33,12 @@ var app = new Vue({
 
     this.isLoading = true;
     const auth = await JSON.parse(localStorage.getItem(DB.AUTH));
-    this.auth = auth;
+    console.log(auth)
+    if (auth == null) {
+      window.location.href = PAGES.INDEX
+    }
 
-    await ContentById(id);
+    await ContentById(auth,id);
 
     apis.allCategories().then((data) => {
       this.categories = data;
@@ -162,19 +165,24 @@ async function uploadContent() {
   }
 }
 
-function ContentById(id) {
+function ContentById(auth,id) {
   this.isLoading = true;
   apis
     .getContent(id)
     .then((con) => {
-      app.isLoading = false;
-      app.isError = false;
-      console.log(con);
-      app.content = con;
-      app.cat = con.category;
-      tab.title = con.title;
-      app.place = con.place;
-      app.location = con.place['location']
+      if (auth.uid !== con.uid) {
+        window.location.href = PAGES.INDEX
+      }else{
+        app.isLoading = false;
+        app.isError = false;
+        console.log(con);
+        app.content = con;
+        app.cat = con.category;
+        tab.title = con.title;
+        app.place = con.place;
+        app.location = con.place['location']
+      }
+      
     })
     .catch((error) => {
       app.isLoading = false;
