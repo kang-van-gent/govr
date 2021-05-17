@@ -178,6 +178,18 @@
     </div>
     <!-- Get Link Modal-->
 
+    <!-- expriration warning Modal-->
+    <div id="myModal-ex" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Some text in the Modal..</p>
+      </div>
+    
+    </div>
+    <!-- expriration warning Modal-->
+
     <!-- Info Modal -->
     <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -498,8 +510,10 @@
                       <input type="submit" id="checkout-button-alt" value="Pay with credit card">
                     </form> -->
 
-                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button" class="btn btn-primary btn-lg btn-block">Cart</a>
-                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button" class="btn btn-primary btn-lg btn-block">Check out</a>
+                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button"
+                      class="btn btn-primary btn-lg btn-block">Cart</a>
+                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button"
+                      class="btn btn-primary btn-lg btn-block">Check out</a>
 
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.disabledC">
                       <div class="card">
