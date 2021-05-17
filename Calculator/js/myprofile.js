@@ -1,3 +1,13 @@
+// todos : checking user subscription 
+// todos : limit display contents
+// todos : check user subscription expriration 
+// todos : expriration modal
+// todos : choose disabled contents modal
+// todos : disabled contents
+// todos : connect to omise API
+// todos : use omise API for payment
+// todos : testing omise payment
+
 (function ($) {
   // Sticky Navbar
   $(window).scroll(function () {
@@ -66,6 +76,14 @@ var app = new Vue({
     this.user = await JSON.parse(localStorage.getItem(DB.USER));
     this.isLoading = true;
 
+    console.log(this.auth)
+    if(this.auth == null){
+      window.location.href = PAGES.LOGIN;
+    }else{
+
+    }
+
+    //calling category
     apis
       .allCategories()
       .then((data) => {
@@ -76,6 +94,7 @@ var app = new Vue({
         this.error = error;
       });
 
+    //calling user's contents
     apis
       .getContentsByUid(this.auth.uid)
       .then((data) => {
@@ -92,18 +111,20 @@ var app = new Vue({
 
   },
   methods: {
-    selectLang: function () {
+    selectLang: function () { //updating language
       langs.selectLanguage(this.lang.code);
       langs.getSelected().then((lang) => {
         this.lang = lang;
       });
     },
-    getSharedLink: function (content) {
+    getSharedLink: function (content) { //getting content's link
       $("#linkModal").modal();
       this.link.isCopied = false;
       this.link.isLoading = true;
       this.link.title = content.title;
       this.link.url = null;
+
+      //getting link by apis
       apis
         .getLink(content.id)
         .then((data) => {
