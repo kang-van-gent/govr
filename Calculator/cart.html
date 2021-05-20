@@ -17,6 +17,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.omise.co/omise.js"></script>
     <title>Cart</title>
 
 
@@ -28,7 +29,7 @@
 </head>
 
 <body scroll="no" style="overflow: hidden">
-      <div class="container">
+    <div class="container">
         <!-- The Modal -->
         <div class="modal fade" id="myModal">
             <div class="modal-dialog modal-dialog-centered">
@@ -42,13 +43,29 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="checkout.php" method="POST">
-                            <input data-dismiss="modal" class="btn btn-primary btn-lg btn-block mb-2" type="submit" id="checkout-button" value="Pay with internet banking">
-                          </form>
-                          <form action="checkout.php" method="POST">
-                            <input data-dismiss="modal" class="btn btn-primary btn-lg btn-block" type="submit" id="checkout-button-alt" value="Pay with credit card">
-                          </form>
+                        <form id="checkout-form" method="POST" action="js/checkout.php">
+                            <!-- <input data-dismiss="modal" class="btn btn-primary btn-lg btn-block mb-2" type="submit"
+                                id="checkout-button" value="Pay with internet banking"> -->
+                            <input data-dismiss="modal" class="btn btn-primary btn-lg btn-block" type="submit"
+                                id="checkout-button-alt" value="Pay with credit card">
+                        </form>
+
                     </div>
+                    <script>
+                        const form = document.getElementById('checkout-form')
+
+                        form.addEventListener('submit',(e) => {
+                            e.preventDefault();
+
+                            const request = new XMLHttpRequest();
+                            request.open('post','checkout.php');
+                            request.onload = function (){
+                                console.log(request.responseText);
+                            }
+                            request.send(new FormData(form));
+
+                        })
+                    </script>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -113,13 +130,13 @@
                                 </select>
                             </div>
                             <div class="col-sm" style="text-align: center;">
-                                <button @click="editCart(1)" type="button" class="btn btn-primary btn-sm" id="minus"><i
-                                        class="fas fa-minus"></i></button>
+                                <button @click="editCart(1)" type="button" class="btn btn-primary btn-sm" id="minus"
+                                    v-if="duration > 0"><i class="fas fa-minus"></i></button>
                                 <input v-model="duration" type="number" name="duration" id="duration"
                                     style="text-align: center;" value="1">
-                                <button @click="editCart(2)" type="button" class="btn btn-primary btn-sm mr-2" id="plus"><i
-                                        class="fas fa-plus"></i></button>
-                                        {{option}}
+                                <button @click="editCart(2)" type="button" class="btn btn-primary btn-sm mr-2"
+                                    id="plus"><i class="fas fa-plus"></i></button>
+                                {{option}}
                             </div>
                         </div>
                     </div>
@@ -128,7 +145,7 @@
                 <div class="row pb-2">
                     <div class="col">
                         <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal"
-                            data-target="#myModal">Buy now (฿{{amount}})</button>
+                            @click="showOmise(amount)" >Buy now (฿{{amount}})</button>
                     </div>
                 </div>
             </div>
@@ -138,7 +155,7 @@
     </div>
 
 
-    <script src="https://cdn.omise.co/omise.js"></script>
+
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

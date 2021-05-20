@@ -5,7 +5,7 @@ var app = new Vue({
     isLoading: false,
     isError: false,
     error: "",
-    duration: 1,
+    duration: 0,
     option: "",
     amount: 0,
   },
@@ -20,20 +20,7 @@ var app = new Vue({
       });
 
       this.calPrice();
-      OmiseCard.configureButton("#checkout-button", {
-        publicKey: "OMISE_PUBLIC_KEY",
-        amount: 10000,
-        frameLabel: "Merchant Name",
-        submitLabel: "Pay",
-        defaultPaymentMethod: "internet_banking",
-      });
-      OmiseCard.configureButton("#checkout-button-alt", {
-        publicKey: "OMISE_PUBLIC_KEY",
-        amount: 10000,
-        frameLabel: "Merchant Name",
-        submitLabel: "Pay",
-      });
-      OmiseCard.attach();
+      
     }
   },
   methods: {
@@ -62,5 +49,46 @@ var app = new Vue({
         this.amount = n * (100 * 12);
       }
     },
+    showOmise: function (amt) {
+      // OmiseCard.configureButton("#checkout-button", {
+      //   amount: amt * 100,
+      //   defaultPaymentMethod: "internet_banking",
+      // });
+      // OmiseCard.configureButton("#checkout-button-alt", {
+      //   publicKey: "pkey_test_5nw5dlqajzq9gdwvuba",
+      //   frameLabel: "GoVR",
+      //   submitLabel: "Pay",
+      //   currency: "THB",
+      //   amount: amt * 100,
+      //   defaultPaymentMethod: "credit_card",
+        
+      // });
+      //  OmiseCard.attach();
+
+      OmiseCard.configure({
+        publicKey: "pkey_test_5nw5dlqajzq9gdwvuba",
+        frameLabel: "GoVR",
+        submitLabel: "Pay",
+        currency: "THB",
+      });
+      OmiseCard.open({
+        amount: amt * 100,
+        submitFormTarget: '#checkout-form',
+        otherPaymentMethods:["internet_banking"],
+        onCreateTokenSuccess: (nonce) => {
+          /* Handler on token or source creation.  Use this to submit form or send ajax request to server */
+          console.log(nonce)
+
+        },
+        onFormClosed: () => {
+          /* Handler on form closure. */
+        },
+      })
+      Omise.setPublicKey('pkey_test_5nw5dlqajzq9gdwvuba')
+      // Omise.configure({secret_key: "skey_test_4xs8breq3htbkj03d2x"})
+      console.log(Omise)
+    },
+
+
   },
 });
