@@ -183,10 +183,13 @@
 
       <!-- Modal content -->
       <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+        <h3>Warning!!</h3>
+        <div style="width: 100%; padding: 10px;"><h5>Your subscription is expried please re-subscription or disable some of your contents.</h5></div>
+        <button @click="disableContents(contents)" class="btn btn-primary btn-lg btn-block" type="button" id="disabledContentModal" >Next</button>
+        <a :href="PAGES.CART + `?id=${auth.uid}`" class="btn btn-primary btn-lg btn-block" type="button" id="disabledContentModal" >Re-subscription</a>
       </div>
-    
+      
+
     </div>
     <!-- expriration warning Modal-->
 
@@ -402,7 +405,7 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row" v-if="contents.linkC.length > 0">
                     <h4>{{lang.ONLY_PEOPLE_WITH_LINK}}</h4>
 
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.linkC">
@@ -451,7 +454,7 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row" v-if="contents.privateC.length >= 1">
                     <h4>{{lang.PRIVATE}}</h4>
 
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.privateC">
@@ -510,10 +513,7 @@
                       <input type="submit" id="checkout-button-alt" value="Pay with credit card">
                     </form> -->
 
-                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button"
-                      class="btn btn-primary btn-lg btn-block">Cart</a>
-                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button"
-                      class="btn btn-primary btn-lg btn-block">Check out</a>
+                    
 
                     <div class="col-xl-3 col-lg-4 col-md-6 p-1" v-for="content in contents.disabledC">
                       <div class="card">
@@ -559,6 +559,8 @@
                         </div>
                       </div>
                     </div>
+                    <a :href="PAGES.CART + `?id=${auth.uid}`" type="button"
+                      class="btn btn-primary btn-lg btn-block">Buy subscription</a>
                   </div>
                 </div>
               </div>

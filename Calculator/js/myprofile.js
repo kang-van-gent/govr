@@ -75,18 +75,13 @@ var app = new Vue({
     this.auth = await JSON.parse(localStorage.getItem(DB.AUTH));
     this.user = await JSON.parse(localStorage.getItem(DB.USER));
     this.isLoading = true;
+    // Use API to get user's subscription
+    let sub = (await subscriptionRef.where('uid', '==', this.auth.uid).get()).docs[0].data()
 
-    console.log(this.auth)
-    if(this.auth == null){
-      window.location.href = PAGES.LOGIN;
-    }else{
-      let modal = document.getElementById('myModal-ex').style;
-      modal.display = 'block'
-      console.log('check user subscription and expriration')
-    }
+
 
     //calling category
-    apis
+    await apis
       .allCategories()
       .then((data) => {
         this.categories = data;
@@ -97,11 +92,12 @@ var app = new Vue({
       });
 
     //calling user's contents
-    apis
+    await apis
       .getContentsByUid(this.auth.uid)
-      .then((data) => {
-        console.log(data);
-        specifyContent(data);
+      .then(async (data) => {
+        // console.log(data);
+        this.cont = data;
+        await specifyContent(data);
         this.isLoading = false;
         this.isError = false;
       })
@@ -111,6 +107,29 @@ var app = new Vue({
         this.error = error;
       });
 
+    if (this.auth == null) {
+      window.location.href = PAGES.LOGIN;
+    } else {
+      if (sub == null) {
+
+        console.log('free user')
+
+      } else {
+        // checking expriration calling API
+        // console.log(sub)
+        let now = new Date().getTime()
+        let ex = new Date(sub.expiredDate).getTime()
+
+        if (now >= ex) {
+          console.log(now)
+          console.log(ex)
+        } else {
+          countContents(this.contents)
+        }
+
+      }
+
+    }
   },
   methods: {
     selectLang: function () { //updating language
@@ -220,7 +239,55 @@ function specifyContent(contents) {
       app.contents.disabledC.push(contents[i]);
     }
   }
-  console.log(app.contents);
+  // console.log(app.contents);
+}
+
+async function disableContents() {
+  // for (let i = 0; i < contents.length; i++) {
+  //   if (!contents[i].disbaled) {
+  //     if (!contents[i].published & !contents[i].private) {
+  //       //only with link
+  //       //onl with link
+  //       app.contents.linkC.push(contents[i]);
+  //     } else if (contents[i].published) {
+  //       //published
+  //       app.contents.publishedC.push(contents[i]);
+  //     } else if (contents[i].private) {
+  //       //private
+  //       app.contents.privateC.push(contents[i]);
+  //     }
+  //   } else {
+  //     //disbaled
+  //     app.contents.disabledC.push(contents[i]);
+  //   }
+  // }
+  let contents = app.cont
+  for (let i = 5; i < contents.length; i++) {
+    console.log(contents[i].id)
+    await contentsRef.doc(contents[i].id).update({
+      disbaled: true,
+      published: false,
+      private: false
+    })
+  }
+  window.location.reload()
+
+
+}
+
+function countContents(content){
+  let count = content['publishedC'].length + content['privateC'].length + content['linkC'].length
+  if (count <= 5) {
+    return
+  }
+  else{
+    console.log("User's subscription is expried")
+    let modal = document.getElementById('myModal-ex').style;
+    modal.display = 'block'
+
+
+  }
+
 }
 
 // Get the modal
@@ -231,13 +298,8 @@ var span = document.getElementsByClassName("close")[0];
 
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+
